@@ -305,7 +305,7 @@ $(DLL_DIR)/liblaz_vcl.a: $(DLL_DIR)/laz_vcl.def ; $(call dll_a,$@,$<)
 # ---------------------------------------------
 # simple prints text for sign the start-uo.
 # ---------------------------------------------
-state_begin: clean
+state_begin: clean premake
 	@$(ECHO) compile files, this can take some time ...
 
 # ---------------------------------------------
@@ -365,12 +365,26 @@ state_end: $(SAMPLE_EXE)
 	@$(ECHO) done.
 
 # -------------------------------------------
+# target's handled by env. parameter ...
+# -------------------------------------------
+.PHONY: clean premake
+
+premake:
+	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)
+	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)
+	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)/vcl
+	$(MKDIR) $(OBJ_DIR)/test
+	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)
+	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)
+	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)/vcl
+	$(MKDIR) $(ASM_DIR)/test
+	$(MKDIR) $(DLL_DIR)
+
+# -------------------------------------------
 # this target, remove all temporary files ...
 # -------------------------------------------
-.PHONY: clean
-
 clean:
-	$(ECHO) prepare data ...
+	@$(ECHO) delete source folder crap ...
 	$(RM)    $(OBJ_DIR)/$(CPP_SRC)
 	$(RM)    $(OBJ_DIR)/$(PAS_SRC)
 	$(RM)    $(OBJ_DIR)/$(PAS_SRC)/vcl
@@ -382,13 +396,5 @@ clean:
 	$(RM)    $(ASM_DIR)/test
 	$(RM)    $(ASM_DIR)
 	$(RM)    $(DLL_DIR)
-	$(RM)    $(SAMPLE_EXE)
-	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)
-	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)
-	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)/vcl
-	$(MKDIR) $(OBJ_DIR)/test
-	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)
-	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)
-	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)/vcl
-	$(MKDIR) $(ASM_DIR)/test
-	$(MKDIR) $(DLL_DIR)
+	$(RM)    sample/test1.exe
+	$(RM)    sample/laz_crt.dll

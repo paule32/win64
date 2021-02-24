@@ -1,0 +1,27 @@
+File STDIN:
+_$dll$laz_crt$TestA
+_$dll$laz_crt$TForm_Create
+_$dll$laz_crt$TObject_Create
+___crt_xc_end__
+___crt_xc_start__
+___crt_xi_end__
+___crt_xi_start__
+___crt_xl_start__
+___crt_xp_end__
+___crt_xp_start__
+___crt_xt_end__
+___crt_xt_start__
+___CTOR_LIST__
+___DTOR_LIST__
+___RUNTIME_PSEUDO_RELOC_LIST__
+___RUNTIME_PSEUDO_RELOC_LIST_END__
+___tls_end__
+___tls_start__
+__CTOR_LIST__
+__DTOR_LIST__
+__end__
+__RUNTIME_PSEUDO_RELOC_LIST__
+__RUNTIME_PSEUDO_RELOC_LIST_END__
+FORMS$_$TFORM_$__$$_CREATE$$QWORDBOOL
+FORMS$_$TOBJECT_$__$$_CREATE$$QWORDBOOL
+FORMS$_$TOBJECT_$__$$_TESTA

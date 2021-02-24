@@ -96,6 +96,17 @@ SRC_FILES = $(CPP_SRC_FILES) $(PAS_SRC_FILES)
 ASM_FILES = $(CPP_ASM_FILES) $(PAS_ASM_FILES)
 OBJ_FILES = $(CPP_OBJ_FILES) $(PAS_OBJ_FILES)
 
+# ------------------------------------------
+# now, hand sorted .dll .o bject files ...
+# ------------------------------------------
+CRT_DLLOF = \
+	$(CPP_OUT)/c_crt.o    \
+	$(CPP_OUT)/SysUtils.o
+
+VCL_DLLOF = \
+	$(PAS_OUT)/vcl/Forms.o \
+	$(CPP_OUT)/Forms.o
+
 # -----------------------------------------------------------
 # these definitions for windows .dll file are hard written,
 # so it may be can differ ...
@@ -134,11 +145,8 @@ endef
 # procedure get many extra informations, that are not needed;
 # so the size of the .dll file is smaller.
 # ----------------------------------------------------------------------
-define add_symbols =
+define crt_def
 	$(ECHO) EXPORTS                        > $(1)
-	$(call dll_export,$(Forms_TForm),_CREATE,QWORDBOOL,$(1))
-	$(call dll_export,$(Forms_TObject),_CREATE,QWORDBOOL,$(1))
-	$(ECHO) $(Forms_TObject)_TESTA        >> $(1)
 	$(ECHO) $(Laz_CRT)LazExitProcess      >> $(1)
 	$(ECHO) $(Laz_CRT)UpperCase           >> $(1)
 	$(ECHO) $(Laz_CRT)WriteLn             >> $(1)
@@ -151,6 +159,31 @@ define add_symbols =
 	$(ECHO) fpc_iocheck                   >> $(1)
 	$(ECHO) fpc_readln_end                >> $(1)
 	$(ECHO) FPC_READLN_END                >> $(1)
+endef
+
+# ------------------------------------------------------
+# these are the hand coded VCL symbols, that i had
+# outsource/re-write from source.
+# so your .exe files no longer be so biiigg ...
+# ------------------------------------------------------
+define vcl_def
+	$(ECHO) EXPORTS                        > $(1)
+	$(call dll_export,$(Forms_TForm),_CREATE,QWORDBOOL,$(1))
+	$(call dll_export,$(Forms_TObject),_CREATE,QWORDBOOL,$(1))
+	$(ECHO) $(Forms_TObject)_TESTA        >> $(1)
+endef
+
+# --------------------------------------------------------
+# that you can use the compiled fpc / c / c++ unit codes,
+# we have to create an .a rchive file, which contains the
+# "import" symbols to call the functions in the .dll file
+# --------------------------------------------------------
+define dll_a =
+	dlltool                  \
+		--def     $(2)       \
+		--dllname $(subst lib,,$(subst .def,.dll,$(2))) \
+		--output-lib $(1)
+	$(STRIP) $(subst lib,,$(subst .def,.dll,$(2)))
 endef
 
 # --------------------------------------------
@@ -213,16 +246,30 @@ define strip_compiler =
 endef
 
 # ------------------------------------------------------
+# i had think, to reduce the size of this Makefile, and
+# to have a better maintain, i create this macro that
+# assemble the given .dll in parameter 1 with the given
+# .o bject's in parameter 2.
+# ------------------------------------------------------
+define make_dll =
+	@$(ECHO) create DLL $(1) ...
+	$(CC) -nostdlib -m64 -shared -o \
+	$(subst lib,,$(1)) $(2) -lkernel32 -luser32
+	nm  $(subst lib,,$(1)) | grep " T " | sed 's/.* T //' \
+	>   $(subst lib,,$(subst .dll,.def.tmp,$@))
+endef
+
+# ------------------------------------------------------
 # this section is Windows 10 Pro 64-Bit specialized ...
 # $(OBJ_FILES) $(DLL_FILE).def
 # ------------------------------------------------------
 REDI_NULL = > nul:
 DLL_DIR   = dll_x64
 
-DLL_FILES = $(DLL_DIR)/laz_crt.dll
-DEF_FILES = $(DLL_DIR)/laz_crt.def
+DLL_FILES = $(DLL_DIR)/laz_crt.dll $(DLL_DIR)/laz_vcl.dll
+DEF_FILES = $(DLL_DIR)/laz_crt.def $(DLL_DIR)/laz_vcl.def
 #
-ALD_FILES = $(DLL_DIR)/liblaz_crt.a
+ALD_FILES = $(DLL_DIR)/liblaz_crt.a $(DLL_DIR)/liblaz_vcl.a
 
 # ---------------------------------------------
 # Makefile: default entry point ...
@@ -235,28 +282,25 @@ pre_tasks:									\
 
 # ---------------------------------------------
 # template: create .dll from .o bject files.
+# $(OBJ_FILES)
 # ---------------------------------------------
-$(DLL_DIR)/%.dll: $(OBJ_FILES)
-	$(CC) -nostdlib -m64 -shared -o \
-	$(subst lib,,$@) $^ -lkernel32 -luser32
-	nm  $(subst lib,,$@) | grep " T " | sed 's/.* T //' \
-	>   $(subst lib,,$(subst .dll,.def.tmp,$@))
+$(DLL_FILES):
+$(DLL_DIR)/laz_crt.dll: $(CRT_DLLOF) ; $(call make_dll,$@,$^)
+$(DLL_DIR)/laz_vcl.dll: $(VCL_DLLOF) ; $(call make_dll,$@,$^)
 
 # ---------------------------------------------
 # template: create .def inition file for linker
 # ---------------------------------------------
-$(DLL_DIR)/%.def: $(DLL_DIR)/%.dll
-	$(call add_symbols,$@)
+$(DEF_FILES):
+$(DLL_DIR)/laz_crt.def: $(DLL_DIR)/laz_crt.dll ; $(call crt_def,$@)
+$(DLL_DIR)/laz_vcl.def: $(DLL_DIR)/laz_vcl.dll ; $(call vcl_def,$@)
 
 # ---------------------------------------------
 # template: create .a rchive file for linker.
 # ---------------------------------------------
-$(DLL_DIR)/%.a: $(DLL_DIR)/%.dll
-	dlltool                                 \
-		--def     $(subst lib,,$(subst .dll,.def,$<)) \
-		--dllname $(subst lib,,$<)                    \
-		--output-lib $@
-	$(STRIP) $(subst lib,,$<)
+$(ALD_FILES):
+$(DLL_DIR)/liblaz_crt.a: $(DLL_DIR)/laz_crt.def ; $(call dll_a,$@,$<)
+$(DLL_DIR)/liblaz_vcl.a: $(DLL_DIR)/laz_vcl.def ; $(call dll_a,$@,$<)
 
 # ---------------------------------------------
 # simple prints text for sign the start-uo.

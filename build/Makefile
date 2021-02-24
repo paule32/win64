@@ -40,7 +40,7 @@ STRIP     = strip
 # default: win64
 # ----------------------------------------
 CFLAGS    = -m64 -I. -O2
-FPC_FLAGS = -s -Ur -Xe -WN -O2 -FUsrc_pp
+FPC_FLAGS = -n -s -Ur -Xe -WN -O2
 GDB_FLAG  = -ggdb
 
 # -----------------------
@@ -104,6 +104,20 @@ OBJ_FILES = $(CPP_OBJ_FILES) $(PAS_OBJ_FILES)
 # C is case-sensitive, and C++ is mangled !!!
 # -----------------------------------------------------------
 EXEC_FILEEXT  = .exe
+
+# ---------------------------------------------------------
+# this shell command store the "current working dir" into
+# the variable CWD ...
+# my default developer directory/hard disk is on E:
+# Windows/DOS uses backslashes \ instead Unix slashes /
+# so, i convert /e/ to e:\
+# ---------------------------------------------------------
+CWD         = $(shell pwd)
+UNIT_PAT    = $(subst /,\,$(subst /e/,e:\,$(CWD)))
+UNIT_DIR    = $(UNIT_PAT)
+#
+FPC_FLAGS  += -Fu$(UNIT_DIR)/$(PAS_SRC)
+FPC_FLAGS  += -Fu$(UNIT_DIR)/$(PAS_ASM)/vcl
 #
 Forms_TForm   = FORMS'$$'_'$$'TOBJECT_'$$'__'$$''$$'
 Forms_TObject = FORMS'$$'_'$$'TOBJECT_'$$'__'$$''$$'
@@ -258,7 +272,7 @@ $(PAS_ASM)/vcl/%.s: $(PAS_SRC)/vcl/%.pas
 	$(call strip_compiler,$@)
 	$(CC) $(CFLAGS) \
 		-o $(subst $(ASM_DIR),$(OBJ_DIR),$(subst .s,.o,$@)) \
-		-c $(subst $(ASM_DIR),$(OBJ_DIR),$@)
+		-c $@
 
 # ---------------------------------------------
 # template: compile PAS .s to .o bject file.
@@ -291,7 +305,7 @@ $(ASM_DIR)/test/%.s: $(SAMPLE_DIR)/%.pas
 	$(FPC) $(FPC_FLAGS) -al -Aas -o$@ $<
 
 $(OBJ_DIR)/test/%.o: $(ASM_DIR)/test/%.s
-	$(call $(strip_compiler),$<)
+	$(call strip_compiler,$<)
 	$(CC) $(CFLAGS) -o $@ -c $<
 	
 $(SAMPLE_DIR)/%$(EXEC_FILEEXT): $(OBJ_DIR)/test/%.o
@@ -312,26 +326,25 @@ state_end: $(SAMPLE_EXE)
 .PHONY: clean
 
 clean:
-
-#	$(ECHO) prepare data ...
-#	$(RM)    $(OBJ_DIR)/$(CPP_SRC)
-#	$(RM)    $(OBJ_DIR)/$(PAS_SRC)
-#	$(RM)    $(OBJ_DIR)/test
-#	$(RM)    $(OBJ_DIR)
-#	$(RM)    $(ASM_DIR)/src_cc
-#	$(MKDIR) $(ASM_DIR)/src_pp/vcl
-#	$(RM)    $(ASM_DIR)/src_pp
-#	$(RM)    $(ASM_DIR)/test
-#	$(RM)    $(ASM_DIR)
-#	$(RM)    $(DLL_DIR)
-#	$(RM)    units
-#	$(RM)    $(SAMPLE_EXE)
-#	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)
-#	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)
-#	$(MKDIR) $(OBJ_DIR)/test
-#	$(MKDIR) $(ASM_DIR)/src_cc
-#	$(MKDIR) $(ASM_DIR)/src_pp
-#	$(MKDIR) $(ASM_DIR)/src_pp/vcl
-#	$(MKDIR) $(ASM_DIR)/test
-#	$(MKDIR) $(DLL_DIR)
-#	$(MKDIR) units
+	$(ECHO) prepare data ...
+	$(RM)    $(OBJ_DIR)/$(CPP_SRC)
+	$(RM)    $(OBJ_DIR)/$(PAS_SRC)
+	$(RM)    $(OBJ_DIR)/$(PAS_SRC)/vcl
+	$(RM)    $(OBJ_DIR)/test
+	$(RM)    $(OBJ_DIR)
+	$(RM)    $(ASM_DIR)/$(CPP_SRC)
+	$(RM)    $(ASM_DIR)/$(PAS_SRC)
+	$(RM)    $(ASM_DIR)/$(PAS_SRC)/vcl
+	$(RM)    $(ASM_DIR)/test
+	$(RM)    $(ASM_DIR)
+	$(RM)    $(DLL_DIR)
+	$(RM)    $(SAMPLE_EXE)
+	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)
+	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)
+	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)/vcl
+	$(MKDIR) $(OBJ_DIR)/test
+	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)
+	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)
+	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)/vcl
+	$(MKDIR) $(ASM_DIR)/test
+	$(MKDIR) $(DLL_DIR)

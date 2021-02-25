@@ -1,9 +1,7 @@
 # ----------------------------------------------------------------
-# This file is part of Lazarus RTL.
+# This file is part of RTL.
 #
-# (c) Copyright 2003 Florian Klaempfl
 # (c) Copyright 2021 Jens Kallup - paule32
-#
 # only for non-profit usage !!!
 #
 # This Makefile was hand-coded. So if you found bugs, please
@@ -67,13 +65,13 @@ CPP_OUT = $(OBJ_DIR)/$(CPP_SRC)
 # -------------------------------------
 CPP_SRC_FILES =           \
 	$(CPP_SRC)/c_crt.c    \
-	$(CPP_SRC)/Forms.c    \
-	$(CPP_SRC)/SysUtils.c
+	$(CPP_SRC)/SysUtils.c \
+	$(CPP_SRC)/vcl/Forms.cc
 #
 CPP_ASM_FILES =           \
 	$(CPP_ASM)/c_crt.s    \
-	$(CPP_ASM)/Forms.s    \
-	$(CPP_ASM)/SysUtils.s
+	$(CPP_ASM)/SysUtils.s \
+	$(CPP_ASM)/vcl/Forms.s
 #
 PAS_SRC_FILES =           \
 	$(PAS_SRC)/vcl/Forms.pas
@@ -86,8 +84,8 @@ PAS_ASM_FILES =           \
 # -------------------------------------
 CPP_OBJ_FILES =           \
 	$(CPP_OUT)/c_crt.o    \
-	$(CPP_OUT)/Forms.o    \
-	$(CPP_OUT)/SysUtils.o
+	$(CPP_OUT)/SysUtils.o \
+	$(CPP_OUT)/vcl/Forms.o
 #
 PAS_OBJ_FILES =            \
 	$(PAS_OUT)/vcl/Forms.o
@@ -105,7 +103,7 @@ CRT_DLLOF = \
 
 VCL_DLLOF = \
 	$(PAS_OUT)/vcl/Forms.o \
-	$(CPP_OUT)/Forms.o
+	$(CPP_OUT)/vcl/Forms.o
 
 # -----------------------------------------------------------
 # these definitions for windows .dll file are hard written,
@@ -237,6 +235,8 @@ define strip_compiler =
 	$(call shlp,'/$(sed_sec)data\.n___heapsize/d',$(1))
 	$(call shlp,'/$(sed_sec)data\.n_INITFINAL/d',$(1))
 	$(call shlp,'/$(sed_sec)fpc\.n_version/d',$(1))
+	$(call shlp,'/$(sed_sec)text\.n_FORMS/d',$(1))
+	$(call shlp,$(subst ,$(;),'/$(sed_sec)rodata\.n_VMT_/I,+4 d'),$(1))
 	$(call shlp,'/^\__heapsize\:/d',$(1))
 	$(call shlp,'/^\INITFINAL\:/d',$(1))
 	$(call shlp,'/^\.globl[[:space:]]*__heapsize/d',$(1))
@@ -264,7 +264,7 @@ endef
 # $(OBJ_FILES) $(DLL_FILE).def
 # ------------------------------------------------------
 REDI_NULL = > nul:
-DLL_DIR   = dll_x64
+DLL_DIR   = dllx64
 
 DLL_FILES = $(DLL_DIR)/laz_crt.dll $(DLL_DIR)/laz_vcl.dll
 DEF_FILES = $(DLL_DIR)/laz_crt.def $(DLL_DIR)/laz_vcl.def
@@ -328,6 +328,10 @@ $(PAS_OUT)/vcl/%.o: $(PAS_OUT)/vcl/%.s
 # ---------------------------------------------
 # template: compile C files to .s assembler.
 # ---------------------------------------------
+$(CPP_ASM)/vcl/%.s: $(CPP_SRC)/vcl/%.cc
+	$(CC) $(CFLAGS) -S -o $@ $<
+	$(call strip_compiler,$@)
+
 $(CPP_ASM)/%.s: $(CPP_SRC)/%.c
 	$(CC) $(CFLAGS) -o $@ -S $<
 	$(call strip_compiler,$@)
@@ -342,7 +346,7 @@ $(CPP_OUT)/%.o: $(CPP_ASM)/%.s
 # This section is optional, compile some test
 # file's ...
 # ---------------------------------------------
-SAMPLE_DIR = samples
+SAMPLE_DIR = sample
 SAMPLE_EXE = $(SAMPLE_DIR)/test1$(EXEC_FILEEXT)
 
 $(ASM_DIR)/test/%.s: $(SAMPLE_DIR)/%.pas
@@ -367,14 +371,19 @@ state_end: $(SAMPLE_EXE)
 # -------------------------------------------
 # target's handled by env. parameter ...
 # -------------------------------------------
-.PHONY: clean premake
+.PHONY: clean premake docs
+
+docs:
+	doxygen devdoc.cfg
 
 premake:
 	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)
+	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)/vcl
 	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)
 	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)/vcl
 	$(MKDIR) $(OBJ_DIR)/test
 	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)
+	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)/vcl
 	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)
 	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)/vcl
 	$(MKDIR) $(ASM_DIR)/test
@@ -385,14 +394,16 @@ premake:
 # -------------------------------------------
 clean:
 	@$(ECHO) delete source folder crap ...
+	$(RM)    $(OBJ_DIR)/$(CPP_SRC)/vcl
 	$(RM)    $(OBJ_DIR)/$(CPP_SRC)
-	$(RM)    $(OBJ_DIR)/$(PAS_SRC)
 	$(RM)    $(OBJ_DIR)/$(PAS_SRC)/vcl
+	$(RM)    $(OBJ_DIR)/$(PAS_SRC)
 	$(RM)    $(OBJ_DIR)/test
 	$(RM)    $(OBJ_DIR)
+	$(RM)    $(ASM_DIR)/$(CPP_SRC)/vcl
 	$(RM)    $(ASM_DIR)/$(CPP_SRC)
-	$(RM)    $(ASM_DIR)/$(PAS_SRC)
 	$(RM)    $(ASM_DIR)/$(PAS_SRC)/vcl
+	$(RM)    $(ASM_DIR)/$(PAS_SRC)
 	$(RM)    $(ASM_DIR)/test
 	$(RM)    $(ASM_DIR)
 	$(RM)    $(DLL_DIR)

@@ -1,5 +1,5 @@
 // ----------------------------------------------------------
-// This file is part of Lazarus RTL.
+// This file is part of RTL.
 //
 // (c) Copyright 2003 Florian Klaempfl
 // (c) Copyright 2021 Jens Kallup - paule32

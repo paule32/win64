@@ -13,6 +13,20 @@
 # YOU USE IT, AT YOUR OWN RISK !
 # ----------------------------------------------------------------
 
+# ----------------------------------------------------------------
+# for applications: please make changes at APP_TYPE !
+#
+# you can create follow application types:
+# - win64 console
+# - win64 gui
+#
+# it is important, that you change the FPC version, if it differ
+# from my version - 3.2.0.
+# for "sed" it will be converted by "make" to 3\.2\.0 !
+# ----------------------------------------------------------------
+APP_TYPE    = console
+FPC_VERSION = 3.2.0
+
 all: pre_tasks $(SAMPLE_EXE)
 
 # --------------------------------------------------
@@ -37,57 +51,68 @@ STRIP     = strip
 # gnu c/c++ speciefied compiler flags.
 # default: win64
 # ----------------------------------------
-CFLAGS    = -m64 -I. -O2
+CFLAGS    = -m64 -I. -O2 -DAPP_TYPE=$(APP_TYPE)
 FPC_FLAGS = -n -s -Ur -Xe -WN -O2
 GDB_FLAG  = -ggdb
 
 # -----------------------
 # temporary settings ...
 # -----------------------
-ASM_DIR = .asm
-OBJ_DIR = .obj
+ASM_DIR  = .asm
+OBJ_DIR  = .obj
 
 # ---------------------------
 # the source directories ...
 # ---------------------------
-SRC_DIR = src
-PAS_SRC = $(SRC_DIR)_pp
-CPP_SRC = $(SRC_DIR)_cc
+SRC_DIR  = src
+PAS_SRC  = $(SRC_DIR)_pp
+CPP_SRC  = $(SRC_DIR)_cc
 # ---- #
-PAS_ASM = $(ASM_DIR)/$(PAS_SRC)
-PAS_OUT = $(OBJ_DIR)/$(PAS_SRC)
+PAS_ASM  = $(ASM_DIR)/$(PAS_SRC)
+PAS_OUT  = $(OBJ_DIR)/$(PAS_SRC)
 # ---- #
-CPP_ASM = $(ASM_DIR)/$(CPP_SRC)
-CPP_OUT = $(OBJ_DIR)/$(CPP_SRC)
+CPP_ASM  = $(ASM_DIR)/$(CPP_SRC)
+CPP_OUT  = $(OBJ_DIR)/$(CPP_SRC)
+
+INCLUDE  = $(CPP_SRC)/include
+CFLAGS  += -I$(INCLUDE)
 
 # -------------------------------------
 # the entiere source files ...
 # -------------------------------------
-CPP_SRC_FILES =           \
-	$(CPP_SRC)/c_crt.c    \
-	$(CPP_SRC)/SysUtils.c \
-	$(CPP_SRC)/vcl/Forms.cc
+CPP_SRC_FILES =               \
+	$(CPP_SRC)/c_crt.c        \
+	$(CPP_SRC)/SysUtils.c     \
+	$(CPP_SRC)/vcl/TForm.cc   \
+	$(CPP_SRC)/vcl/TObject.cc \
+	$(CPP_SRC)/rtl/strings.cc
 #
-CPP_ASM_FILES =           \
-	$(CPP_ASM)/c_crt.s    \
-	$(CPP_ASM)/SysUtils.s \
-	$(CPP_ASM)/vcl/Forms.s
+CPP_ASM_FILES =               \
+	$(CPP_ASM)/c_crt.s        \
+	$(CPP_ASM)/SysUtils.s     \
+	$(CPP_ASM)/vcl/TForm.s    \
+	$(CPP_ASM)/vcl/TObject.s  \
+	$(CPP_ASM)/rtl/strings.s
 #
-PAS_SRC_FILES =           \
+PAS_SRC_FILES =                \
+	$(PAS_SRC)/rtl/strings.pas \
 	$(PAS_SRC)/vcl/Forms.pas
 #
-PAS_ASM_FILES =           \
+PAS_ASM_FILES =              \
+	$(PAS_ASM)/rtl/strings.s \
 	$(PAS_ASM)/vcl/Forms.s
 
 # -------------------------------------
 # the corresponding .o bject files ...
 # -------------------------------------
-CPP_OBJ_FILES =           \
-	$(CPP_OUT)/c_crt.o    \
-	$(CPP_OUT)/SysUtils.o \
-	$(CPP_OUT)/vcl/Forms.o
+CPP_OBJ_FILES =              \
+	$(CPP_OUT)/c_crt.o       \
+	$(CPP_OUT)/SysUtils.o    \
+	$(CPP_OUT)/vcl/TForm.o   \
+	$(CPP_OUT)/rtl/strings.o
 #
-PAS_OBJ_FILES =            \
+PAS_OBJ_FILES =              \
+	$(PAS_OUT)/rtl/strings.o \
 	$(PAS_OUT)/vcl/Forms.o
 
 SRC_FILES = $(CPP_SRC_FILES) $(PAS_SRC_FILES)
@@ -97,13 +122,17 @@ OBJ_FILES = $(CPP_OBJ_FILES) $(PAS_OBJ_FILES)
 # ------------------------------------------
 # now, hand sorted .dll .o bject files ...
 # ------------------------------------------
+RTL_DLLOF = \
+	$(CPP_OUT)/rtl/strings.o
+	
 CRT_DLLOF = \
 	$(CPP_OUT)/c_crt.o    \
 	$(CPP_OUT)/SysUtils.o
 
 VCL_DLLOF = \
-	$(PAS_OUT)/vcl/Forms.o \
-	$(CPP_OUT)/vcl/Forms.o
+	$(PAS_OUT)/vcl/Forms.o   \
+	$(CPP_OUT)/vcl/TForm.o   \
+	$(CPP_OUT)/vcl/TObject.o
 
 # -----------------------------------------------------------
 # these definitions for windows .dll file are hard written,
@@ -126,11 +155,15 @@ UNIT_PAT    = $(subst /,\,$(subst /e/,e:\,$(CWD)))
 UNIT_DIR    = $(UNIT_PAT)
 #
 FPC_FLAGS  += -Fu$(UNIT_DIR)/$(PAS_SRC)
+FPC_FLAGS  += -Fu$(UNIT_DIR)/$(PAS_ASM)/rtl
 FPC_FLAGS  += -Fu$(UNIT_DIR)/$(PAS_ASM)/vcl
 #
 Forms_TForm   = FORMS'$$'_'$$'TOBJECT_'$$'__'$$''$$'
 Forms_TObject = FORMS'$$'_'$$'TOBJECT_'$$'__'$$''$$'
+#
 Laz_CRT       = _'$$'dll'$$'laz_crt'$$'
+Laz_RTL       = _'$$'dll'$$'laz_rtl'$$'
+Laz_VCL       = _'$$'dll'$$'laz_vlc'$$'
 # ------------------------------------------------------
 # this is a place-holder macro, to hold text read-able.
 # ------------------------------------------------------
@@ -143,10 +176,9 @@ endef
 # procedure get many extra informations, that are not needed;
 # so the size of the .dll file is smaller.
 # ----------------------------------------------------------------------
-define crt_def
+define crt_def =
 	$(ECHO) EXPORTS                        > $(1)
 	$(ECHO) $(Laz_CRT)LazExitProcess      >> $(1)
-	$(ECHO) $(Laz_CRT)UpperCase           >> $(1)
 	$(ECHO) $(Laz_CRT)WriteLn             >> $(1)
 	$(ECHO) fpc_ansistr_decr_ref          >> $(1)
 	$(ECHO) fpc_do_exit                   >> $(1)
@@ -160,11 +192,20 @@ define crt_def
 endef
 
 # ------------------------------------------------------
+# rtl - run time library .def initions for laz_rtl.dll
+# ------------------------------------------------------
+define rtl_def =
+	$(ECHO) EXPORTS                        > $(1)
+	$(ECHO) $(Laz_RTL)LowerCase           >> $(1)
+	$(ECHO) $(Laz_RTL)UpperCase           >> $(1)
+endef
+
+# ------------------------------------------------------
 # these are the hand coded VCL symbols, that i had
 # outsource/re-write from source.
 # so your .exe files no longer be so biiigg ...
 # ------------------------------------------------------
-define vcl_def
+define vcl_def =
 	$(ECHO) EXPORTS                        > $(1)
 	$(call dll_export,$(Forms_TForm),_CREATE,QWORDBOOL,$(1))
 	$(call dll_export,$(Forms_TObject),_CREATE,QWORDBOOL,$(1))
@@ -229,7 +270,7 @@ define strip_compiler =
 	$(call shlp,'/^#[[:space:]]*.*/d',$(1))
 	$(call shlp,'/^\.Lc[0-9]*:/d',$(1))
 	$(call shlp,'/__fpc_ident\:/d',$(1))
-	$(call shlp,'/[[:space:]]*.ascii[[:space:]]\"FPC 3\.2\.0.*/d',$(1))
+	$(call shlp,'/[[:space:]]*.ascii[[:space:]]\"FPC $(subst .,\.,$(FPC_VERSION)).*/d',$(1))
 	$(call shlp,'/$(sed_sec)text\.n_fpc.*/d',$(1))
 	$(call shlp,'/[[:space:]]call[[:space:]]fpc_initializeunits/d',$(1))
 	$(call shlp,'/$(sed_sec)data\.n___heapsize/d',$(1))
@@ -266,10 +307,20 @@ endef
 REDI_NULL = > nul:
 DLL_DIR   = dllx64
 
-DLL_FILES = $(DLL_DIR)/laz_crt.dll $(DLL_DIR)/laz_vcl.dll
-DEF_FILES = $(DLL_DIR)/laz_crt.def $(DLL_DIR)/laz_vcl.def
+DLL_FILES = \
+	$(DLL_DIR)/laz_crt.dll \
+	$(DLL_DIR)/laz_rtl.dll \
+	$(DLL_DIR)/laz_vcl.dll
+	
+DEF_FILES = \
+	$(DLL_DIR)/laz_crt.def \
+	$(DLL_DIR)/laz_rtl.def \
+	$(DLL_DIR)/laz_vcl.def
 #
-ALD_FILES = $(DLL_DIR)/liblaz_crt.a $(DLL_DIR)/liblaz_vcl.a
+ALD_FILES = \
+	$(DLL_DIR)/liblaz_crt.a \
+	$(DLL_DIR)/liblaz_rtl.a \
+	$(DLL_DIR)/liblaz_vcl.a
 
 # ---------------------------------------------
 # Makefile: default entry point ...
@@ -286,6 +337,7 @@ pre_tasks:									\
 # ---------------------------------------------
 $(DLL_FILES):
 $(DLL_DIR)/laz_crt.dll: $(CRT_DLLOF) ; $(call make_dll,$@,$^)
+$(DLL_DIR)/laz_rtl.dll: $(RTL_DLLOF) ; $(call make_dll,$@,$^)
 $(DLL_DIR)/laz_vcl.dll: $(VCL_DLLOF) ; $(call make_dll,$@,$^)
 
 # ---------------------------------------------
@@ -293,6 +345,7 @@ $(DLL_DIR)/laz_vcl.dll: $(VCL_DLLOF) ; $(call make_dll,$@,$^)
 # ---------------------------------------------
 $(DEF_FILES):
 $(DLL_DIR)/laz_crt.def: $(DLL_DIR)/laz_crt.dll ; $(call crt_def,$@)
+$(DLL_DIR)/laz_rtl.def: $(DLL_DIR)/laz_rtl.dll ; $(call rtl_def,$@)
 $(DLL_DIR)/laz_vcl.def: $(DLL_DIR)/laz_vcl.dll ; $(call vcl_def,$@)
 
 # ---------------------------------------------
@@ -300,6 +353,7 @@ $(DLL_DIR)/laz_vcl.def: $(DLL_DIR)/laz_vcl.dll ; $(call vcl_def,$@)
 # ---------------------------------------------
 $(ALD_FILES):
 $(DLL_DIR)/liblaz_crt.a: $(DLL_DIR)/laz_crt.def ; $(call dll_a,$@,$<)
+$(DLL_DIR)/liblaz_rtl.a: $(DLL_DIR)/laz_rtl.def ; $(call dll_a,$@,$<)
 $(DLL_DIR)/liblaz_vcl.a: $(DLL_DIR)/laz_vcl.def ; $(call dll_a,$@,$<)
 
 # ---------------------------------------------
@@ -311,8 +365,15 @@ state_begin: clean premake
 # ---------------------------------------------
 # template: compile .pas to .s assembler.
 # ---------------------------------------------
+$(PAS_ASM)/rtl/%.s: $(PAS_SRC)/rtl/%.pas
+	$(FPC) -al -Aas $(FPC_FLAGS) -o$@ $<
+	$(call strip_compiler,$@)
+	$(CC) $(CFLAGS) \
+		-o $(subst $(ASM_DIR),$(OBJ_DIR),$(subst .s,.o,$@)) \
+		-c $@
+
 $(PAS_ASM)/vcl/%.s: $(PAS_SRC)/vcl/%.pas
-	$(FPC) $(FPC_FLAGS) -al -Aas -o$@ $<
+	$(FPC) -al -Aas $(FPC_FLAGS) -o$@ $<
 	$(call strip_compiler,$@)
 	$(CC) $(CFLAGS) \
 		-o $(subst $(ASM_DIR),$(OBJ_DIR),$(subst .s,.o,$@)) \
@@ -321,6 +382,10 @@ $(PAS_ASM)/vcl/%.s: $(PAS_SRC)/vcl/%.pas
 # ---------------------------------------------
 # template: compile PAS .s to .o bject file.
 # ---------------------------------------------
+$(PAS_OUT)/rtl/%.o: $(PAS_OUT)/rtl/%.s
+	$(call strip_compiler,$<)
+	$(CC) $(CFLAGS) -o $@ -c $<
+
 $(PAS_OUT)/vcl/%.o: $(PAS_OUT)/vcl/%.s
 	$(call strip_compiler,$<)
 	$(CC) $(CFLAGS) -o $@ -c $<
@@ -328,6 +393,10 @@ $(PAS_OUT)/vcl/%.o: $(PAS_OUT)/vcl/%.s
 # ---------------------------------------------
 # template: compile C files to .s assembler.
 # ---------------------------------------------
+$(CPP_ASM)/rtl/%.s: $(CPP_SRC)/rtl/%.cc
+	$(CC) $(CFLAGS) -S -o $@ $<
+	$(call strip_compiler,$@)
+
 $(CPP_ASM)/vcl/%.s: $(CPP_SRC)/vcl/%.cc
 	$(CC) $(CFLAGS) -S -o $@ $<
 	$(call strip_compiler,$@)
@@ -335,11 +404,21 @@ $(CPP_ASM)/vcl/%.s: $(CPP_SRC)/vcl/%.cc
 $(CPP_ASM)/%.s: $(CPP_SRC)/%.c
 	$(CC) $(CFLAGS) -o $@ -S $<
 	$(call strip_compiler,$@)
+	
+$(CPP_ASM)/%.s: $(CPP_SRC)/%.cc
+	$(CC) $(CFLAGS) -o $@ -S $<
+	$(call strip_compiler,$@)
 
 # ---------------------------------------------
 # template: compile C .s files to .o bject's.
 # ---------------------------------------------
 $(CPP_OUT)/%.o: $(CPP_ASM)/%.s
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(CPP_OUT)/rtl/%.o: $(CPP_ASM)/rtl/%.s
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(CPP_OUT)/vcl/%.o: $(CPP_ASM)/vcl/%.s
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 # ---------------------------------------------
@@ -350,7 +429,7 @@ SAMPLE_DIR = sample
 SAMPLE_EXE = $(SAMPLE_DIR)/test1$(EXEC_FILEEXT)
 
 $(ASM_DIR)/test/%.s: $(SAMPLE_DIR)/%.pas
-	$(FPC) $(FPC_FLAGS) -al -Aas -o$@ $<
+	$(FPC) -al -Aas $(FPC_FLAGS) -o$@ $<
 
 $(OBJ_DIR)/test/%.o: $(ASM_DIR)/test/%.s
 	$(call strip_compiler,$<)
@@ -378,13 +457,17 @@ docs:
 
 premake:
 	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)
+	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)/rtl
 	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)/vcl
 	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)
+	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)/rtl
 	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)/vcl
 	$(MKDIR) $(OBJ_DIR)/test
 	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)
+	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)/rtl
 	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)/vcl
 	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)
+	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)/rtl
 	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)/vcl
 	$(MKDIR) $(ASM_DIR)/test
 	$(MKDIR) $(DLL_DIR)
@@ -394,14 +477,18 @@ premake:
 # -------------------------------------------
 clean:
 	@$(ECHO) delete source folder crap ...
+	$(RM)    $(OBJ_DIR)/$(CPP_SRC)/rtl
 	$(RM)    $(OBJ_DIR)/$(CPP_SRC)/vcl
 	$(RM)    $(OBJ_DIR)/$(CPP_SRC)
+	$(RM)    $(OBJ_DIR)/$(PAS_SRC)/rtl
 	$(RM)    $(OBJ_DIR)/$(PAS_SRC)/vcl
 	$(RM)    $(OBJ_DIR)/$(PAS_SRC)
 	$(RM)    $(OBJ_DIR)/test
 	$(RM)    $(OBJ_DIR)
+	$(RM)    $(ASM_DIR)/$(CPP_SRC)/rtl
 	$(RM)    $(ASM_DIR)/$(CPP_SRC)/vcl
 	$(RM)    $(ASM_DIR)/$(CPP_SRC)
+	$(RM)    $(ASM_DIR)/$(PAS_SRC)/rtl
 	$(RM)    $(ASM_DIR)/$(PAS_SRC)/vcl
 	$(RM)    $(ASM_DIR)/$(PAS_SRC)
 	$(RM)    $(ASM_DIR)/test

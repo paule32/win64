@@ -12,15 +12,15 @@ START_MANGLE
 START_VCL_NS
 
 // TForm constructor: FPC
-VOID FPC_DLLFUNC(TForm_Create)
+VOID FPC_DLLFUNC(TForm_Create,vcl)()
 FPC_BEGIN
 
 FPC_END
 
 // TForm constrcutor: C++
-TForm::TForm(VOID) { FPC_DLLFUNC(TForm_Create); }
+TForm::TForm(VOID) { FPC_DLLFUNC(TForm_Create,vcl); }
 
-VOID FPC_DLLFUNC(TestA)
+VOID FPC_DLLFUNC(TestA,vcl)()
 FPC_BEGIN
 
 FPC_END

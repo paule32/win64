@@ -32,20 +32,22 @@ public:
 	 *
 	 *  @param   none
 	 *  @return  Object Reference
-	 *  @version 1.0
+	 *
 	 *  <br><b>Example</b>:
 	 *  @code
-	        C++
-	        auto *obj = new TObject;
-			
-			FPC
-			obj := TObject.Create;
+	 *   C++
+	 *   auto *obj = new TObject;
+	 *
+	 *   FPC
+	 *   obj := TObject.Create;
 	 *  @endcode
+	 *  @version 1.0
 	 *  @see     Addiere(double, double);
 	 */
 	TObject();
 		
-	/** @brief   destructor of TObject **/
+	/** @brief   destructor of TObject.
+	 */
 	~TObject();
 };
 

@@ -44,8 +44,10 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">TTypes.h File Reference</div>  </div>
 </div><!--header-->
@@ -56,11 +58,17 @@ $(function() {
 
 <p><a href="../../d7/d8f/_t_types_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/dcd/structts___s_h_o_r_t_s_t_r_i_n_g.html">ts_SHORTSTRING</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This typedef represents the FPC data type STRING structure.  <a href="../../d3/dcd/structts___s_h_o_r_t_s_t_r_i_n_g.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a5e573e166d72cd1859a5215e4843dc63"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#a5e573e166d72cd1859a5215e4843dc63">FPC_DLLFUNC</a>(x)&#160;&#160;&#160;_$dll$laz_crt$ ## x()</td></tr>
-<tr class="memdesc:a5e573e166d72cd1859a5215e4843dc63"><td class="mdescLeft">&#160;</td><td class="mdescRight">FPC produce prefix code for each DLL class export; This macro hold proper code for maintain / readable.  <a href="../../d7/d8f/_t_types_8h.html#a5e573e166d72cd1859a5215e4843dc63">More...</a><br /></td></tr>
-<tr class="separator:a5e573e166d72cd1859a5215e4843dc63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50e9b6f90dd0a814c75faae10883a9cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#a50e9b6f90dd0a814c75faae10883a9cc">FPC_DLLFUNC</a>(x,  y)&#160;&#160;&#160;_$dll$laz_ ## y ## $ ## x()</td></tr>
+<tr class="memdesc:a50e9b6f90dd0a814c75faae10883a9cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">FPC produce prefix code for each DLL class export; This macro hold proper code for maintain / readable.  <a href="../../d7/d8f/_t_types_8h.html#a50e9b6f90dd0a814c75faae10883a9cc">More...</a><br /></td></tr>
+<tr class="separator:a50e9b6f90dd0a814c75faae10883a9cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad362199ea4f03805fb5e72a258b14e6d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#ad362199ea4f03805fb5e72a258b14e6d">FPC_BEGIN</a>&#160;&#160;&#160;{</td></tr>
 <tr class="memdesc:ad362199ea4f03805fb5e72a258b14e6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro simple define the begin of an C scope.  <a href="../../d7/d8f/_t_types_8h.html#ad362199ea4f03805fb5e72a258b14e6d">More...</a><br /></td></tr>
 <tr class="separator:ad362199ea4f03805fb5e72a258b14e6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -85,6 +93,21 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a2cbd81be86b75d8683d0fe33c70ef8df"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="../../d7/d8f/_t_types_8h.html#a2cbd81be86b75d8683d0fe33c70ef8df">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#a2cbd81be86b75d8683d0fe33c70ef8df">void</a></td></tr>
 <tr class="memdesc:a2cbd81be86b75d8683d0fe33c70ef8df"><td class="mdescLeft">&#160;</td><td class="mdescRight">simple place holder for "none"  <a href="../../d7/d8f/_t_types_8h.html#a2cbd81be86b75d8683d0fe33c70ef8df">More...</a><br /></td></tr>
 <tr class="separator:a2cbd81be86b75d8683d0fe33c70ef8df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae9749d96e15ccb4f482dd5f55d98f9b"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#aae9749d96e15ccb4f482dd5f55d98f9b">BYTE</a></td></tr>
+<tr class="memdesc:aae9749d96e15ccb4f482dd5f55d98f9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro define the data type BYTE.  <a href="../../d7/d8f/_t_types_8h.html#aae9749d96e15ccb4f482dd5f55d98f9b">More...</a><br /></td></tr>
+<tr class="separator:aae9749d96e15ccb4f482dd5f55d98f9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebb9e13210d88d43e32e735ada43a425"><td class="memItemLeft" align="right" valign="top">typedef char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#aebb9e13210d88d43e32e735ada43a425">CHAR</a></td></tr>
+<tr class="memdesc:aebb9e13210d88d43e32e735ada43a425"><td class="mdescLeft">&#160;</td><td class="mdescRight">This typedef represents the FPC data type CHAR.  <a href="../../d7/d8f/_t_types_8h.html#aebb9e13210d88d43e32e735ada43a425">More...</a><br /></td></tr>
+<tr class="separator:aebb9e13210d88d43e32e735ada43a425"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab66ae93ccab836cea488042bde4fe8f5"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="../../d7/d8f/_t_types_8h.html#aebb9e13210d88d43e32e735ada43a425">CHAR</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#ab66ae93ccab836cea488042bde4fe8f5">STRING</a></td></tr>
+<tr class="memdesc:ab66ae93ccab836cea488042bde4fe8f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro represents the FPC data type STRING.  <a href="../../d7/d8f/_t_types_8h.html#ab66ae93ccab836cea488042bde4fe8f5">More...</a><br /></td></tr>
+<tr class="separator:ab66ae93ccab836cea488042bde4fe8f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:afd9157925445a9e1ea5e24d93a61c977"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d7/d8f/_t_types_8h.html#ab66ae93ccab836cea488042bde4fe8f5">STRING</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#afd9157925445a9e1ea5e24d93a61c977">SHORTSTRING</a> (<a class="el" href="../../d7/d8f/_t_types_8h.html#ab66ae93ccab836cea488042bde4fe8f5">STRING</a> s)</td></tr>
+<tr class="memdesc:afd9157925445a9e1ea5e24d93a61c977"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper function for the FPC data type ShortSTRING.  <a href="../../d7/d8f/_t_types_8h.html#afd9157925445a9e1ea5e24d93a61c977">More...</a><br /></td></tr>
+<tr class="separator:afd9157925445a9e1ea5e24d93a61c977"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>some macros, and typedef's for better source maintain / readable. </p>
@@ -112,7 +135,7 @@ Typedefs</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00067">67</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00080">80</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -134,7 +157,7 @@ Typedefs</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00088">88</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00101">101</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -156,12 +179,12 @@ Typedefs</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00037">37</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00050">50</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
-<a id="a5e573e166d72cd1859a5215e4843dc63"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e573e166d72cd1859a5215e4843dc63">&#9670;&nbsp;</a></span>FPC_DLLFUNC</h2>
+<a id="a50e9b6f90dd0a814c75faae10883a9cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50e9b6f90dd0a814c75faae10883a9cc">&#9670;&nbsp;</a></span>FPC_DLLFUNC</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -170,19 +193,43 @@ Typedefs</h2></td></tr>
           <td class="memname">#define FPC_DLLFUNC</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">x</td><td>)</td>
-          <td>&#160;&#160;&#160;_$dll$laz_crt$ ## x()</td>
+          <td class="paramname">x, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">y&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;_$dll$laz_ ## y ## $ ## x()</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>FPC produce prefix code for each DLL class export; This macro hold proper code for maintain / readable. </p>
 <p>It combine the compiler prefix with the class object name.</p>
-<dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>- function name </td></tr>
+    <tr><td class="paramname">y</td><td>= library name</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Possible values for y can be:</p><ul>
+<li>crt</li>
+<li>rtl</li>
+<li>vcl, and many more</li>
+</ul>
+<p><b>Example</b>: </p><div class="fragment"><div class="line"><a class="code" href="../../d7/d8f/_t_types_8h.html#a50e9b6f90dd0a814c75faae10883a9cc">FPC_DLLFUNC</a>(TForm_Create,vcl)</div>
+<div class="ttc" id="a_t_types_8h_html_a50e9b6f90dd0a814c75faae10883a9cc"><div class="ttname"><a href="../../d7/d8f/_t_types_8h.html#a50e9b6f90dd0a814c75faae10883a9cc">FPC_DLLFUNC</a></div><div class="ttdeci">#define FPC_DLLFUNC(x, y)</div><div class="ttdoc">FPC produce prefix code for each DLL class export; This macro hold proper code for maintain / readabl...</div><div class="ttdef"><b>Definition:</b> <a href="../../d7/d8f/_t_types_8h_source.html#l00040">TTypes.h:40</a></div></div>
+</div><!-- fragment --><dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00027">27</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00040">40</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -204,7 +251,7 @@ Typedefs</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00047">47</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00060">60</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -226,7 +273,7 @@ Typedefs</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00057">57</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00070">70</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -248,11 +295,78 @@ Typedefs</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00078">78</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00091">91</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
+<a id="aae9749d96e15ccb4f482dd5f55d98f9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae9749d96e15ccb4f482dd5f55d98f9b">&#9670;&nbsp;</a></span>BYTE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint8_t <a class="el" href="../../d7/d8f/_t_types_8h.html#aae9749d96e15ccb4f482dd5f55d98f9b">BYTE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This macro define the data type BYTE. </p>
+<p><br  />
+ One Byte are 8-Bit - the smallest character that can be display. </p><dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00117">117</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+
+</div>
+</div>
+<a id="aebb9e13210d88d43e32e735ada43a425"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebb9e13210d88d43e32e735ada43a425">&#9670;&nbsp;</a></span>CHAR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef char <a class="el" href="../../d7/d8f/_t_types_8h.html#aebb9e13210d88d43e32e735ada43a425">CHAR</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This typedef represents the FPC data type CHAR. </p>
+<p><br  />
+ CHAR is limited to be one character. Please don't confuse with BYTE. </p><dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00125">125</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+
+</div>
+</div>
+<a id="ab66ae93ccab836cea488042bde4fe8f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab66ae93ccab836cea488042bde4fe8f5">&#9670;&nbsp;</a></span>STRING</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="../../d7/d8f/_t_types_8h.html#aebb9e13210d88d43e32e735ada43a425">CHAR</a>* <a class="el" href="../../d7/d8f/_t_types_8h.html#ab66ae93ccab836cea488042bde4fe8f5">STRING</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This macro represents the FPC data type STRING. </p>
+<p><br  />
+ STRING has limited length of 255 Bytes. Internal, it is declared in structure SHORTSTRING.<br  />
+ Internal handled as char pointer type: char*. </p><dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00135">135</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+
+</div>
+</div>
 <a id="a2cbd81be86b75d8683d0fe33c70ef8df"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2cbd81be86b75d8683d0fe33c70ef8df">&#9670;&nbsp;</a></span>void</h2>
 
@@ -270,14 +384,48 @@ Typedefs</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00096">96</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00109">109</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="afd9157925445a9e1ea5e24d93a61c977"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd9157925445a9e1ea5e24d93a61c977">&#9670;&nbsp;</a></span>SHORTSTRING()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d7/d8f/_t_types_8h.html#ab66ae93ccab836cea488042bde4fe8f5">STRING</a> SHORTSTRING </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d7/d8f/_t_types_8h.html#ab66ae93ccab836cea488042bde4fe8f5">STRING</a>&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Wrapper function for the FPC data type ShortSTRING. </p>
+<p><br  />
+ STRING has limited length of 255 Bytes. Internal, it is declared as char*<br  />
+ The structure of this data type is defined in the struct in data fields section.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>: the raw string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>STRING : the string s as C char* type.</dd></dl>
+<dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 25 2021 15:14:27 for FPC / C++ Borland VCL by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Fri Feb 26 2021 01:06:48 for FPC / C++ Borland VCL by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

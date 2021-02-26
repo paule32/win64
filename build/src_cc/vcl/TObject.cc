@@ -12,13 +12,13 @@ START_MANGLE
 START_VCL_NS
 
 // TObject constructor: FPC
-VOID FPC_DLLFUNC(TObject_Create)
+VOID FPC_DLLFUNC(TObject_Create,vcl)()
 FPC_BEGIN
 
 FPC_END
 
 // TObject constrcutor: C++
-TObject::TObject() { FPC_DLLFUNC(TObject_Create); }
+TObject::TObject() { FPC_DLLFUNC(TObject_Create,vcl)(); }
 
 // TObject destructor: C++
 TObject::~TObject() { }

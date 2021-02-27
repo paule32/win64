@@ -2,9 +2,12 @@
 program test1;
 
 uses
-  Windows;
+  Windows, Strings;
 
 begin
+ Length('hallo');
+ WriteLn('meerjung');
+
   asm
     movl $1, %ecx
     call LazExitProcess

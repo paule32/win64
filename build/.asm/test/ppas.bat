@@ -1,4 +1,8 @@
 @echo off
+SET THEFILE=system
+echo Assembling %THEFILE%
+e:\lazarus\fpc\3.2.0\bin\x86_64-win64\as.exe --64 -o .asm\test\system.o   .asm\test\system.s
+if errorlevel 1 goto asmend
 SET THEFILE=sysinit
 echo Assembling %THEFILE%
 e:\lazarus\fpc\3.2.0\bin\x86_64-win64\as.exe --64 -o .asm\test\sysinit.o   .asm\test\sysinit.s

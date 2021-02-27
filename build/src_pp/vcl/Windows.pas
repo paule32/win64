@@ -11,13 +11,7 @@ unit Windows;
 
 interface
 
-procedure LazExitProcess (ExitCode: LongInt); cdecl; external 'laz_crt.dll' name 'LazExitProcess';
-
-procedure UpperCase;                          cdecl; external 'laz_crt.dll';
-procedure WriteLn         (s: String);        cdecl; external 'laz_crt.dll';
-
-procedure ExitProcess(ExitCode: LongInt); stdcall; external 'kernel32.dll' name 'ExitProcess';
-
 implementation
 
+procedure dummy; begin end;
 end.

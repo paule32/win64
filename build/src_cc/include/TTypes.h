@@ -6,6 +6,7 @@
 // ----------------------------------------------------------
 #pragma once
 # include <stdint.h>
+# include <windows.h>
 
 /** @file    TTypes.h
  *  @brief   some macros, and typedef's for better source
@@ -164,17 +165,35 @@
  */
 # define END_VCL_NS   }
 
-#ifndef VOID
+/** @brief   This macro helps, to indicate the different namespace used for
+ *           C++ mangled scope, <br>and the differnt packages (here the LazWIN)<br>
+ *           It is developer desire beatifuier.
+ *           Nothing else.
+ *
+ *  @author  paule32
+ *  @date    2021-02-25
+ *  @version 1.0
+ */
+# define START_WIN_NS namespace LazWIN {
+
+/** @brief   This macro simple define the end of an C++ namespace scope.<br>
+ *           It is developer desire beatifuier.
+ *           Nothing else.
+ *
+ *  @author  paule32
+ *  @date    2021-02-25
+ *  @version 1.0
+ */
+# define END_WIN_NS   }
+
 /** @brief   simple place holder for "none"
  *
  *  @author  paule32
  *  @date    2021-02-25
  *  @version 1.0
  */
-typedef void    VOID;
-#endif
+typedef void    LazVOID;
 
-#ifndef LazBOOL
 /** @brief   This macro define the data type Boolean.<br>
  *           One BOOLEAN have 8-Bit, not 1-bit !
  *
@@ -183,9 +202,7 @@ typedef void    VOID;
  *  @version 1.0
  */
 typedef uint8_t LazBOOL;
-#endif
 
-#ifndef LazBYTE
 /** @brief   This macro define the data type BYTE.<br>
  *           One Byte are 8-Bit - the smallest character that can be display.
  *  @author  paule32
@@ -193,9 +210,7 @@ typedef uint8_t LazBOOL;
  *  @version 1.0
  */
 typedef uint8_t  LazBYTE;
-#endif
 
-#ifndef LazCHAR
 /** @brief   This typedef represents the FPC data type CHAR.<br>
  *           CHAR is limited to be one character. <br>
  *           Please don't confuse with BYTE.
@@ -205,11 +220,8 @@ typedef uint8_t  LazBYTE;
  *  @version 1.0
  */
 typedef char     LazCHAR;
-#endif
-
 typedef unsigned char LazUCHAR;
 
-#ifndef LazWORD
 /** @brief   This typedef represents the data type WORD.<br>
  *           WORD is a 16-bit data type.
  *  @author  paule32
@@ -217,9 +229,7 @@ typedef unsigned char LazUCHAR;
  *  @version 1.0
  */
 typedef uint16_t  LazWORD;
-#endif
 
-#ifndef LazDWORD
 /** @brief   This typedef represents the data type DWORD.<br>
  *           DWORD (double word) is a 32-bit data type.
  *  @author  paule32
@@ -227,9 +237,7 @@ typedef uint16_t  LazWORD;
  *  @version 1.0
  */
 typedef uint32_t LazDWORD;
-#endif
 
-#ifndef LazINTEGER
 /** @brief   This typedef represents the data type Integer.<br>
  *           Integer is a 64-bit data type.
  *  @author  paule32
@@ -237,9 +245,7 @@ typedef uint32_t LazDWORD;
  *  @version 1.0
  */
 typedef uint64_t LazINTEGER;
-#endif
 
-#ifndef LazQWORD
 /** @brief   This typedef represents the data type QWORD.<br>
  *           QWORD (quad word) is a 64-bit data type.
  *  @author  paule32
@@ -247,7 +253,6 @@ typedef uint64_t LazINTEGER;
  *  @version 1.0
  */
 typedef uint64_t LazQWORD;
-#endif
 
 /** @brief   This macro represents the FPC data type STRING.<br>
  *           STRING has limited length of 255 Bytes. Internal, it is
@@ -258,12 +263,21 @@ typedef uint64_t LazQWORD;
  *  @version 1.0
  */
 typedef LazCHAR*  LazSTRING;
+typedef void*     LazPOINTER;
 
 void *operator new  (size_t);
 void *operator new[](size_t);
 
 void  operator delete  (void *ptr);
 void  operator delete[](void *ptr);
+
+void *LazMemSet(void*, int         , size_t);
+void *LazMemCpy(void*, const  void*, size_t);
+
+void *LazMemMove(void*, const void*, size_t);
+
+template <typename T>
+void *LazMemSet(T*, T, size_t);
 
 /** @brief   This typedef represents the FPC data type SHORTSTRING structure.
  *           STRING has limited length of 255 Bytes. Internal, it is
@@ -284,7 +298,7 @@ typedef struct {
 	/** This field variable hold the string
      *  @author  paule32
 	 */
-	LazSTRING str;
+	LazCHAR str[255];
 } LazSHORTSTRING;
 
 /** @brief   Wrapper function for the FPC data type ShortSTRING.<br>
@@ -300,3 +314,13 @@ typedef struct {
  *  @version 1.0
  */
 extern "C" LazSTRING CopyPascalString2PChar(LazSTRING s);
+
+typedef struct {
+	HANDLE  std_output;
+	HANDLE  std_input;
+	HANDLE  std_error;
+	
+	BOOL    is_open;
+} LazTerminalStruct;
+
+extern LazTerminalStruct LazTerminal;

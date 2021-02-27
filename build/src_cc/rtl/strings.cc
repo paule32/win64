@@ -13,6 +13,23 @@
 START_MANGLE
 START_RTL_NS
 
+// this is the CRT Terminal definition
+LazTerminalStruct LazTerminal;
+LazSHORTSTRING    LazStringImg;
+
+// ----------------------------------------------------------
+// Exit procedure, delete memory ...
+// ----------------------------------------------------------
+LazVOID FPC_DLLFUNC(LazExitProcess,rtl)(LazINTEGER s)
+FPC_BEGIN
+	ExitProcess(s);
+FPC_END
+
+void LAZEXITPROCEDURE(uint32_t ExitCode)
+FPC_BEGIN
+	FPC_DLLFUNC(LazExitProcess,rtl)(ExitCode);
+FPC_END
+
 // ----------------------------------------------------------
 // memcpy copies the ShortString data-type from FPC to C/C++
 // char ptr.
@@ -177,11 +194,106 @@ strreplace(LazSTRING s, char old, char _new)
 }
 
 // ----------------------------------------------------------
-// get the length of an ShortString (String).
+// this function check, if windows can create std handles...
 // ----------------------------------------------------------
-LazINTEGER FPC_DLLFUNC(Length,rtl)(LazSTRING s)
+static void check_console()
+{
+	HANDLE dw;
+	if (!LazTerminal.is_open) {
+		if (
+		MessageBox(NULL,
+		"No terminal open.\n"
+		"Do you want open a CRT Terminal ?",
+		"Warning",
+		MB_YESNO|MB_ICONQUESTION|MB_TASKMODAL|MB_SETFOREGROUND)
+		== IDNO)
+		FPC_DLLFUNC(LazExitProcess,rtl)( GetLastError() );
+	}
+
+	AllocConsole();
+	LazTerminal.std_output = GetStdHandle(STD_OUTPUT_HANDLE);
+	dw = reinterpret_cast<HANDLE>(GetLastError());
+
+	if (dw == INVALID_HANDLE_VALUE) {
+		MessageBox(NULL,
+		"No terminal open.\n"
+		"Can't get the output handle !",
+		"Error",MB_OK);
+		FPC_DLLFUNC(LazExitProcess,rtl)(reinterpret_cast<LazINTEGER>(dw));
+	}
+
+	LazTerminal.std_input  = GetStdHandle(STD_INPUT_HANDLE);
+	dw = reinterpret_cast<HANDLE>(GetLastError());
+	if (dw == INVALID_HANDLE_VALUE) {
+		MessageBox(NULL,
+		"No terminal open.\n"
+		"Can't get the input handle !",
+		"Error",MB_OK);
+		FPC_DLLFUNC(LazExitProcess,rtl)(reinterpret_cast<LazINTEGER>(dw));
+	}
+
+	LazTerminal.std_error  = GetStdHandle(STD_ERROR_HANDLE);
+	dw = reinterpret_cast<HANDLE>(GetLastError());
+	if (dw == INVALID_HANDLE_VALUE) {
+		MessageBox(NULL,
+		"No terminal open.\n"
+		"Can't get the error handle !",
+		"Error",MB_OK);
+		FPC_DLLFUNC(LazExitProcess,rtl)(reinterpret_cast<LazINTEGER>(dw));
+	}
+
+	AttachConsole(ATTACH_PARENT_PROCESS);
+	LazTerminal.is_open = TRUE;
+}
+
+// ----------------------------------------------------------
+// WriteLn - display text in console.
+// ----------------------------------------------------------
+LazVOID FPC_DLLFUNC(WriteLn,rtl)(LazCHAR *s)
 FPC_BEGIN
-	return strlen(s);
+	check_console();
+	
+	long unsigned int i;
+	uint8_t len = *s;
+
+	WriteConsoleA(
+		LazTerminal.std_output,
+		s, len, &i,
+		NULL);
+FPC_END
+
+// ----------------------------------------------------------
+// get the length of an Byte array.
+// ----------------------------------------------------------
+LazINTEGER FPC_DLLFUNC(LengthByte,rtl)(LazBYTE s)
+FPC_BEGIN
+	return 1;
+FPC_END
+
+// ----------------------------------------------------------
+// get the length of an Char array.
+// ----------------------------------------------------------
+LazINTEGER FPC_DLLFUNC(LengthChar,rtl)(LazCHAR s)
+FPC_BEGIN
+	return 1;
+FPC_END
+
+// ----------------------------------------------------------
+// get the length of an Integer array.
+// ----------------------------------------------------------
+LazINTEGER FPC_DLLFUNC(LengthInteger,rtl)(LazINTEGER s)
+FPC_BEGIN
+	return 1;
+FPC_END
+
+// ----------------------------------------------------------
+// get the length of an ShortString (String) array.
+// ----------------------------------------------------------
+LazINTEGER FPC_DLLFUNC(LengthString,rtl)(LazCHAR *s)
+FPC_BEGIN
+	uint8_t len = *s;
+	MessageBox(NULL,s,"info",MB_OK);
+	return len;
 FPC_END
 
 // ----------------------------------------------------------

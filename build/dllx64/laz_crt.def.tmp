@@ -1,8 +1,4 @@
 File STDIN:
-_$dll$kernel32$ExitProcess
-_$dll$laz_crt$LazExitProcess
-_$dll$laz_crt$UpperCase
-_$dll$laz_crt$WriteLn
 ___crt_xc_end__
 ___crt_xc_start__
 ___crt_xi_end__
@@ -20,10 +16,8 @@ __CTOR_LIST__
 __DTOR_LIST__
 __end__
 AttachConsole
-DllMainCRTStartup
 fpc_initializeunits
 GetStdHandle
-LAZEXITPROCEDURE
 MessageBoxA
 P$CRT_$$_WRITELN$SHORTSTRING
 WriteConsoleA

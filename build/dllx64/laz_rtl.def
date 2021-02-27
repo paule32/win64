@@ -1,4 +1,10 @@
 EXPORTS
-_$dll$laz_rtl$Length
+_$dll$laz_rtl$LAZEXITPROCESS
+_$dll$laz_rtl$LazExitProcess
+_$dll$laz_rtl$LengthByte
+_$dll$laz_rtl$LengthChar
+_$dll$laz_rtl$LengthInteger
+_$dll$laz_rtl$LengthString
 _$dll$laz_rtl$LowerCase
 _$dll$laz_rtl$UpperCase
+_$dll$laz_rtl$WriteLn

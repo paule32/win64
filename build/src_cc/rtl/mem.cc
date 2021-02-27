@@ -13,47 +13,39 @@
 void *operator new(size_t size)
 {
 	void *ptr = nullptr;
-	#ifdef WINDOWS
 	ptr = VirtualAlloc(
 		NULL,						// system selects address
 		size,						// the allocated bytes
 		MEM_COMMIT | MEM_RESERVE,	// null zero allocation
 		PAGE_READWRITE);			// protection type
-	#endif
 	return ptr;
 }
 
 void *operator new[](size_t size)
 {
 	void *ptr = nullptr;
-	#ifdef WINDOWS
 	ptr = VirtualAlloc(
 		NULL,						// system selects address
 		size,						// the allocated bytes
 		MEM_COMMIT | MEM_RESERVE,	// null zero allocation
 		PAGE_READWRITE);			// protection type
-	#endif
 	return ptr;
 }
 
 void operator delete(void *ptr)
 {
-	#ifdef WINDOWS
 	if (!VirtualFree(ptr,0,MEM_RELEASE)) {
 		MessageBox(NULL,"internal memory release error.","Error",MB_OK);
 		ExitProcess( GetLastError() );
 	}
-	#endif
 }
 
 void operator delete[](void *ptr)
 {
-	#ifdef WINDOWS
 	if (!VirtualFree(ptr,0,MEM_RELEASE)) {
 		MessageBox(NULL,"internal memory release error.","Error",MB_OK);
 		ExitProcess( GetLastError() );
 	}
-	#endif
 }
 
 /**
@@ -64,7 +56,7 @@ void operator delete[](void *ptr)
  *
  * Do not use memset() to access IO space, use memset_io() instead.
  */
-void *memset(void *s, int c, size_t count)
+void *LazMemSet(void *s, int c, size_t count)
 {
 	LazSTRING xs = reinterpret_cast<LazSTRING>(s);
 
@@ -86,10 +78,10 @@ void *memset(void *s, int c, size_t count)
  * store, not the number of bytes.
  */
 template <typename T>
-void *memset(T *s, T v, size_t count)
+void *LazMemSet(T *s, T v, size_t count)
 {
-	uint16_t *xs = s;
-	while (count--) *xs++ = v;
+	T *xs = s;
+	while (count--) *(xs++) = v;
 	return s;
 }
 
@@ -102,13 +94,17 @@ void *memset(T *s, T v, size_t count)
  * You should not use this function to access IO space, use memcpy_toio()
  * or memcpy_fromio() instead.
  */
-void *memcpy(void *dest, void *src, size_t count)
+void *LazMemCpy(void *dest, const void *src, size_t n)
 {
-	LazSTRING tmp = reinterpret_cast<LazSTRING>(dest);
-	LazSTRING   s = reinterpret_cast<LazSTRING>(src );
-
-	while (count--) *(tmp++) = *(s++);
-	return dest;
+	// Typecast src and dest addresses to (char *) 
+	char *csrc = (char *)src; 
+	char *cdest = (char *)dest; 
+  
+	// Copy contents of src[] to dest[] 
+	for (int i=0; i<n; i++) 
+	cdest[i] = csrc[i];
+	
+	return cdest;
 }
 
 /**
@@ -119,7 +115,7 @@ void *memcpy(void *dest, void *src, size_t count)
  *
  * Unlike memcpy(), memmove() copes with overlapping areas.
  */
-void *memmove(void *dest, const void *src, size_t count)
+void *LazMemMove(void *dest, const void *src, size_t count)
 {
 	char *tmp;
 	const char *s;

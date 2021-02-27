@@ -1,272 +1,411 @@
 	.file	"strings.cc"
 	.text
 	.p2align 4,,15
+	.globl	_$dll$laz_rtl$LazExitProcess
+_$dll$laz_rtl$LazExitProcess:
+.LFB6003:
+	subq	$40, %rsp
+	call	*__imp_ExitProcess(%rip)
+	nop
+	.p2align 4,,15
+	.globl	LAZEXITPROCEDURE
+LAZEXITPROCEDURE:
+.LFB6004:
+	subq	$40, %rsp
+	call	*__imp_ExitProcess(%rip)
+	nop
+	.section .rdata,"dr"
+.LC0:
+	.ascii "Error\0"
+.LC1:
+	.ascii "string is too long\0"
+	.text
+	.p2align 4,,15
 	.globl	CopyPascalString2PChar
 CopyPascalString2PChar:
-.LFB6003:
+.LFB6005:
+	subq	$40, %rsp
+	call	strlen
+	cmpq	$255, %rax
+	ja	.L6
 	movl	$255, %ecx
+	addq	$40, %rsp
 	jmp	_Znay
+.L6:
+	leaq	.LC0(%rip), %r8
+	xorl	%ecx, %ecx
+	xorl	%r9d, %r9d
+	leaq	.LC1(%rip), %rdx
+	call	*__imp_MessageBoxA(%rip)
+	call	*__imp_GetLastError(%rip)
+	movl	%eax, %ecx
+	call	*__imp_ExitProcess(%rip)
+	nop
 	.p2align 4,,15
 	.globl	isspace
 isspace:
-.LFB6004:
+.LFB6006:
 	xorl	%eax, %eax
 	cmpb	$32, %cl
-	ja	.L3
+	ja	.L7
 	movabsq	$4294979328, %rax
 	shrq	%cl, %rax
 	andl	$1, %eax
-.L3:
+.L7:
 	ret
 	.p2align 4,,15
 	.globl	strcat
 strcat:
-.LFB6005:
+.LFB6007:
 	cmpb	$0, (%rcx)
 	movq	%rcx, %rax
 	movq	%rcx, %r9
-	je	.L7
+	je	.L11
 	.p2align 4,,10
-.L8:
+.L12:
 	addq	$1, %r9
 	cmpb	$0, (%r9)
-	jne	.L8
-.L7:
+	jne	.L12
+.L11:
 	xorl	%r8d, %r8d
 	.p2align 4,,10
-.L9:
+.L13:
 	movzbl	(%rdx,%r8), %r10d
 	movb	%r10b, (%r9,%r8)
 	addq	$1, %r8
 	testb	%r10b, %r10b
-	jne	.L9
+	jne	.L13
 	ret
 	.p2align 4,,15
 	.globl	strcmp
 strcmp:
-.LFB6006:
+.LFB6008:
 	xorl	%eax, %eax
-	jmp	.L16
+	jmp	.L20
 	.p2align 4,,10
-.L14:
+.L18:
 	addq	$1, %rax
 	testb	%r8b, %r8b
-	je	.L19
-.L16:
+	je	.L23
+.L20:
 	movzbl	(%rcx,%rax), %r8d
 	cmpb	(%rdx,%rax), %r8b
-	je	.L14
+	je	.L18
 	sbbl	%eax, %eax
 	orl	$1, %eax
 	ret
 	.p2align 4,,10
-.L19:
+.L23:
 	xorl	%eax, %eax
 	ret
 	.p2align 4,,15
 	.globl	strchr
 strchr:
-.LFB6007:
+.LFB6009:
 	movzbl	(%rcx), %eax
 	cmpb	%dl, %al
 	movl	%edx, %r8d
-	jne	.L23
-	jmp	.L24
+	jne	.L27
+	jmp	.L28
 	.p2align 4,,10
-.L28:
+.L32:
 	addq	$1, %rcx
 	movzbl	(%rcx), %eax
 	cmpb	%r8b, %al
-	je	.L24
-.L23:
+	je	.L28
+.L27:
 	testb	%al, %al
-	jne	.L28
+	jne	.L32
 	xorl	%eax, %eax
 	ret
 	.p2align 4,,10
-.L24:
+.L28:
 	movq	%rcx, %rax
 	ret
 	.p2align 4,,15
 	.globl	skip_spaces
 skip_spaces:
-.LFB6008:
+.LFB6010:
 	movq	%rcx, %rax
 	movabsq	$4294979328, %rcx
 	movzbl	(%rax), %edx
 	cmpb	$32, %dl
-	ja	.L29
-.L33:
+	ja	.L33
+.L37:
 	btq	%rdx, %rcx
-	jnc	.L29
+	jnc	.L33
 	addq	$1, %rax
 	movzbl	(%rax), %edx
 	cmpb	$32, %dl
-	jbe	.L33
-.L29:
+	jbe	.L37
+.L33:
 	ret
 	.p2align 4,,15
 	.globl	strim
 strim:
-.LFB6009:
+.LFB6011:
 	pushq	%rbx
 	subq	$32, %rsp
 	movq	%rcx, %rbx
 	call	strlen
 	movq	%rbx, %rdx
 	testq	%rax, %rax
-	je	.L34
+	je	.L38
 	leaq	-1(%rbx,%rax), %rax
 	cmpq	%rax, %rbx
-	ja	.L36
+	ja	.L40
 	movabsq	$4294979328, %rcx
-.L39:
+.L43:
 	movzbl	(%rax), %edx
 	cmpb	$32, %dl
-	jbe	.L43
-.L36:
+	jbe	.L47
+.L40:
 	movq	%rbx, %rdx
 	movb	$0, 1(%rax)
 	movabsq	$4294979328, %rcx
 	movzbl	(%rdx), %eax
 	cmpb	$32, %al
-	ja	.L34
-.L44:
+	ja	.L38
+.L48:
 	btq	%rax, %rcx
-	jnc	.L34
+	jnc	.L38
 	addq	$1, %rdx
 	movzbl	(%rdx), %eax
 	cmpb	$32, %al
-	jbe	.L44
-.L34:
+	jbe	.L48
+.L38:
 	movq	%rdx, %rax
 	addq	$32, %rsp
 	popq	%rbx
 	ret
 	.p2align 4,,10
-.L43:
+.L47:
 	btq	%rdx, %rcx
-	jnc	.L36
+	jnc	.L40
 	subq	$1, %rax
 	cmpq	%rax, %rbx
-	jbe	.L39
-	jmp	.L36
+	jbe	.L43
+	jmp	.L40
 	.p2align 4,,15
 	.globl	strlen
 strlen:
-.LFB6010:
+.LFB6012:
 	cmpb	$0, (%rcx)
-	je	.L48
+	je	.L52
 	movq	%rcx, %rax
 	.p2align 4,,10
-.L47:
+.L51:
 	addq	$1, %rax
 	cmpb	$0, (%rax)
-	jne	.L47
+	jne	.L51
 	subq	%rcx, %rax
 	ret
 	.p2align 4,,10
-.L48:
+.L52:
 	xorl	%eax, %eax
 	ret
 	.p2align 4,,15
 	.globl	strnlen
 strnlen:
-.LFB6011:
+.LFB6013:
 	testq	%rdx, %rdx
 	movq	%rdx, %rax
-	je	.L51
+	je	.L55
 	cmpb	$0, (%rcx)
 	leaq	(%rcx,%rdx), %r9
 	movq	%rcx, %r8
-	jne	.L53
-	jmp	.L60
+	jne	.L57
+	jmp	.L64
 	.p2align 4,,10
-.L54:
+.L58:
 	cmpb	$0, (%r8)
-	je	.L61
-.L53:
+	je	.L65
+.L57:
 	addq	$1, %r8
 	cmpq	%r9, %r8
-	jne	.L54
-.L51:
+	jne	.L58
+.L55:
 	ret
 	.p2align 4,,10
-.L61:
+.L65:
 	movq	%r8, %rax
 	subq	%rcx, %rax
 	ret
-.L60:
+.L64:
 	xorl	%eax, %eax
 	ret
 	.p2align 4,,15
 	.globl	strreplace
 strreplace:
-.LFB6012:
+.LFB6014:
 	movq	%rcx, %rax
 	movzbl	(%rcx), %ecx
 	testb	%cl, %cl
-	je	.L63
+	je	.L67
 	.p2align 4,,10
-.L65:
+.L69:
 	cmpb	%cl, %dl
-	jne	.L64
+	jne	.L68
 	movb	%r8b, (%rax)
-.L64:
+.L68:
 	addq	$1, %rax
 	movzbl	(%rax), %ecx
 	testb	%cl, %cl
-	jne	.L65
-.L63:
+	jne	.L69
+.L67:
+	ret
+	.section .rdata,"dr"
+.LC2:
+	.ascii "Warning\0"
+	.align 8
+.LC3:
+	.ascii "No terminal open.\12Do you want open a CRT Terminal ?\0"
+	.text
+	.p2align 4,,15
+	.globl	_$dll$laz_rtl$WriteLn
+_$dll$laz_rtl$WriteLn:
+.LFB6016:
+	pushq	%rdi
+	pushq	%rsi
+	pushq	%rbx
+	subq	$64, %rsp
+	movl	24+LazTerminal(%rip), %eax
+	testl	%eax, %eax
+	movq	%rcx, %rdi
+	jne	.L75
+	leaq	.LC2(%rip), %r8
+	xorl	%ecx, %ecx
+	movl	$73764, %r9d
+	leaq	.LC3(%rip), %rdx
+	call	*__imp_MessageBoxA(%rip)
+	cmpl	$7, %eax
+	je	.L76
+.L75:
+	call	*__imp_AllocConsole(%rip)
+	movq	__imp_GetStdHandle(%rip), %rsi
+	movl	$-11, %ecx
+	call	*%rsi
+	movq	__imp_GetLastError(%rip), %rbx
+	movq	%rax, LazTerminal(%rip)
+	call	*%rbx
+	movl	$-10, %ecx
+	call	*%rsi
+	movq	%rax, 8+LazTerminal(%rip)
+	call	*%rbx
+	movl	$-12, %ecx
+	call	*%rsi
+	movq	%rax, 16+LazTerminal(%rip)
+	call	*%rbx
+	movl	$-1, %ecx
+	call	*__imp_AttachConsole(%rip)
+	movq	LazTerminal(%rip), %rcx
+	leaq	60(%rsp), %r9
+	movq	%rdi, %rdx
+	movl	$1, 24+LazTerminal(%rip)
+	movzbl	(%rdi), %r8d
+	movq	$0, 32(%rsp)
+	call	*__imp_WriteConsoleA(%rip)
+	nop
+	addq	$64, %rsp
+	popq	%rbx
+	popq	%rsi
+	popq	%rdi
+	ret
+.L76:
+	call	*__imp_GetLastError(%rip)
+	movl	%eax, %ecx
+	call	*__imp_ExitProcess(%rip)
+	nop
+	.p2align 4,,15
+	.globl	_$dll$laz_rtl$LengthByte
+_$dll$laz_rtl$LengthByte:
+.LFB6017:
+	movl	$1, %eax
 	ret
 	.p2align 4,,15
-	.globl	_$dll$laz_rtl$Length
-_$dll$laz_rtl$Length:
-.LFB6017:
-	jmp	strlen
+	.globl	_$dll$laz_rtl$LengthChar
+_$dll$laz_rtl$LengthChar:
+.LFB6018:
+	movl	$1, %eax
+	ret
+	.p2align 4,,15
+	.globl	_$dll$laz_rtl$LengthInteger
+_$dll$laz_rtl$LengthInteger:
+.LFB6019:
+	movl	$1, %eax
+	ret
+	.section .rdata,"dr"
+.LC4:
+	.ascii "info\0"
+	.text
+	.p2align 4,,15
+	.globl	_$dll$laz_rtl$LengthString
+_$dll$laz_rtl$LengthString:
+.LFB6020:
+	pushq	%rbx
+	subq	$32, %rsp
+	leaq	.LC4(%rip), %r8
+	xorl	%r9d, %r9d
+	movzbl	(%rcx), %ebx
+	movq	%rcx, %rdx
+	xorl	%ecx, %ecx
+	call	*__imp_MessageBoxA(%rip)
+	movzbl	%bl, %eax
+	addq	$32, %rsp
+	popq	%rbx
+	ret
 	.p2align 4,,15
 	.globl	_$dll$laz_rtl$LowerCase
 _$dll$laz_rtl$LowerCase:
-.LFB6014:
+.LFB6021:
 	movzbl	(%rcx), %edx
 	testb	%dl, %dl
 	movq	%rcx, %rax
-	je	.L72
+	je	.L82
 	movq	%rcx, %r8
 	.p2align 4,,10
-.L74:
+.L84:
 	leal	-65(%rdx), %r9d
 	cmpb	$25, %r9b
-	ja	.L73
+	ja	.L83
 	subl	$32, %edx
 	movb	%dl, (%r8)
-.L73:
+.L83:
 	addq	$1, %r8
 	movzbl	(%r8), %edx
 	testb	%dl, %dl
-	jne	.L74
-.L72:
+	jne	.L84
+.L82:
 	ret
 	.p2align 4,,15
 	.globl	_$dll$laz_rtl$UpperCase
 _$dll$laz_rtl$UpperCase:
-.LFB6015:
+.LFB6022:
 	movzbl	(%rcx), %edx
 	testb	%dl, %dl
 	movq	%rcx, %rax
-	je	.L80
+	je	.L90
 	movq	%rcx, %r8
 	.p2align 4,,10
-.L82:
+.L92:
 	leal	-97(%rdx), %r9d
 	cmpb	$25, %r9b
-	ja	.L81
+	ja	.L91
 	subl	$32, %edx
 	movb	%dl, (%r8)
-.L81:
+.L91:
 	addq	$1, %r8
 	movzbl	(%r8), %edx
 	testb	%dl, %dl
-	jne	.L82
-.L80:
+	jne	.L92
+.L90:
 	ret
+	.globl	LazStringImg
+	.bss
+	.align 32
+LazStringImg:
+	.space 256
+	.globl	LazTerminal
+	.align 32
+LazTerminal:
+	.space 32

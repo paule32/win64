@@ -1,0 +1,4 @@
+EXPORTS
+_$dll$laz_rtl$Length
+_$dll$laz_rtl$LowerCase
+_$dll$laz_rtl$UpperCase

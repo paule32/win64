@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>FPC / C++ Borland VCL: src_cc/vcl/TTypes.h File Reference</title>
+<title>FPC / C++ Borland VCL: src_cc/include/TTypes.h File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -39,7 +39,7 @@ $(function() {
 <div id="main-nav"></div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_62c6380c1112c3d098ce23463d78055d.html">src_cc</a></li><li class="navelem"><a class="el" href="../../dir_dbd02e299502de96c548344b86527792.html">vcl</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_62c6380c1112c3d098ce23463d78055d.html">src_cc</a></li><li class="navelem"><a class="el" href="../../dir_2152dd685448a885c4a782d75d86c6a1.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -55,18 +55,19 @@ $(function() {
 
 <p>some macros, and typedef's for better source maintain / readable.  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+</div>
 <p><a href="../../d7/d8f/_t_types_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/dcd/structts___s_h_o_r_t_s_t_r_i_n_g.html">ts_SHORTSTRING</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This typedef represents the FPC data type STRING structure.  <a href="../../d3/dcd/structts___s_h_o_r_t_s_t_r_i_n_g.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/de1/struct_t_d___s_h_o_r_t_s_t_r_i_n_g.html">TD_SHORTSTRING</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This typedef represents the FPC data type SHORTSTRING structure.  <a href="../../d8/de1/struct_t_d___s_h_o_r_t_s_t_r_i_n_g.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a50e9b6f90dd0a814c75faae10883a9cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#a50e9b6f90dd0a814c75faae10883a9cc">FPC_DLLFUNC</a>(x,  y)&#160;&#160;&#160;_$dll$laz_ ## y ## $ ## x()</td></tr>
+<tr class="memitem:a50e9b6f90dd0a814c75faae10883a9cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#a50e9b6f90dd0a814c75faae10883a9cc">FPC_DLLFUNC</a>(x,  y)&#160;&#160;&#160;_$dll$laz_ ## y ## $ ## x</td></tr>
 <tr class="memdesc:a50e9b6f90dd0a814c75faae10883a9cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">FPC produce prefix code for each DLL class export; This macro hold proper code for maintain / readable.  <a href="../../d7/d8f/_t_types_8h.html#a50e9b6f90dd0a814c75faae10883a9cc">More...</a><br /></td></tr>
 <tr class="separator:a50e9b6f90dd0a814c75faae10883a9cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad362199ea4f03805fb5e72a258b14e6d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#ad362199ea4f03805fb5e72a258b14e6d">FPC_BEGIN</a>&#160;&#160;&#160;{</td></tr>
@@ -81,11 +82,29 @@ Macros</h2></td></tr>
 <tr class="memitem:a372a4d10383b63d0e7766bed900a46c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#a372a4d10383b63d0e7766bed900a46c4">END_MANGLE</a>&#160;&#160;&#160;};</td></tr>
 <tr class="memdesc:a372a4d10383b63d0e7766bed900a46c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro simple define the end of an C++ de-mangle scope It is developer desire beatifuier.  <a href="../../d7/d8f/_t_types_8h.html#a372a4d10383b63d0e7766bed900a46c4">More...</a><br /></td></tr>
 <tr class="separator:a372a4d10383b63d0e7766bed900a46c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a232c868cf2ecb45f1cfd4753362bff"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#a7a232c868cf2ecb45f1cfd4753362bff">START_CRT_NS</a>&#160;&#160;&#160;namespace LazCRT {</td></tr>
+<tr class="memdesc:a7a232c868cf2ecb45f1cfd4753362bff"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro helps, to indicate the different namespace used for C++ mangled scope, <br  />
+and the differnt packages (here the LazCRT)<br  />
+ It is developer desire beatifuier.  <a href="../../d7/d8f/_t_types_8h.html#a7a232c868cf2ecb45f1cfd4753362bff">More...</a><br /></td></tr>
+<tr class="separator:a7a232c868cf2ecb45f1cfd4753362bff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdc497c22d986ed1d5fcd8e698052233"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#afdc497c22d986ed1d5fcd8e698052233">END_CRT_NS</a>&#160;&#160;&#160;}</td></tr>
+<tr class="memdesc:afdc497c22d986ed1d5fcd8e698052233"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro simple define the end of an C++ namespace scope.  <a href="../../d7/d8f/_t_types_8h.html#afdc497c22d986ed1d5fcd8e698052233">More...</a><br /></td></tr>
+<tr class="separator:afdc497c22d986ed1d5fcd8e698052233"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc315e63b1cd642f01a1ce333bda3396"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#acc315e63b1cd642f01a1ce333bda3396">START_RTL_NS</a>&#160;&#160;&#160;namespace LazVCL {</td></tr>
+<tr class="memdesc:acc315e63b1cd642f01a1ce333bda3396"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro helps, to indicate the different namespace used for C++ mangled scope, <br  />
+and the differnt packages (here the LazRTL)<br  />
+ It is developer desire beatifuier.  <a href="../../d7/d8f/_t_types_8h.html#acc315e63b1cd642f01a1ce333bda3396">More...</a><br /></td></tr>
+<tr class="separator:acc315e63b1cd642f01a1ce333bda3396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3273fc65c0cf4dcf6788c63781288e7c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#a3273fc65c0cf4dcf6788c63781288e7c">END_RTL_NS</a>&#160;&#160;&#160;}</td></tr>
+<tr class="memdesc:a3273fc65c0cf4dcf6788c63781288e7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro simple define the end of an C++ namespace scope.  <a href="../../d7/d8f/_t_types_8h.html#a3273fc65c0cf4dcf6788c63781288e7c">More...</a><br /></td></tr>
+<tr class="separator:a3273fc65c0cf4dcf6788c63781288e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad079d0b486821020a6fba4436c763703"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#ad079d0b486821020a6fba4436c763703">START_VCL_NS</a>&#160;&#160;&#160;namespace LazVCL {</td></tr>
-<tr class="memdesc:ad079d0b486821020a6fba4436c763703"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro helps, to indicate the different namespace used for C++ mangled scope, and the differnt packages (here the LazVCL) It is developer desire beatifuier.  <a href="../../d7/d8f/_t_types_8h.html#ad079d0b486821020a6fba4436c763703">More...</a><br /></td></tr>
+<tr class="memdesc:ad079d0b486821020a6fba4436c763703"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro helps, to indicate the different namespace used for C++ mangled scope, <br  />
+and the differnt packages (here the LazVCL)<br  />
+ It is developer desire beatifuier.  <a href="../../d7/d8f/_t_types_8h.html#ad079d0b486821020a6fba4436c763703">More...</a><br /></td></tr>
 <tr class="separator:ad079d0b486821020a6fba4436c763703"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55805737f5e2c369440bf8cb58f431b7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#a55805737f5e2c369440bf8cb58f431b7">END_VCL_NS</a>&#160;&#160;&#160;}</td></tr>
-<tr class="memdesc:a55805737f5e2c369440bf8cb58f431b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro simple define the end of an C++ namespace scope It is developer desire beatifuier.  <a href="../../d7/d8f/_t_types_8h.html#a55805737f5e2c369440bf8cb58f431b7">More...</a><br /></td></tr>
+<tr class="memdesc:a55805737f5e2c369440bf8cb58f431b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro simple define the end of an C++ namespace scope.  <a href="../../d7/d8f/_t_types_8h.html#a55805737f5e2c369440bf8cb58f431b7">More...</a><br /></td></tr>
 <tr class="separator:a55805737f5e2c369440bf8cb58f431b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -99,6 +118,15 @@ Typedefs</h2></td></tr>
 <tr class="memitem:aebb9e13210d88d43e32e735ada43a425"><td class="memItemLeft" align="right" valign="top">typedef char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#aebb9e13210d88d43e32e735ada43a425">CHAR</a></td></tr>
 <tr class="memdesc:aebb9e13210d88d43e32e735ada43a425"><td class="mdescLeft">&#160;</td><td class="mdescRight">This typedef represents the FPC data type CHAR.  <a href="../../d7/d8f/_t_types_8h.html#aebb9e13210d88d43e32e735ada43a425">More...</a><br /></td></tr>
 <tr class="separator:aebb9e13210d88d43e32e735ada43a425"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab24077addd3b7b13e086987ff296552c"><td class="memItemLeft" align="right" valign="top">typedef uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#ab24077addd3b7b13e086987ff296552c">WORD</a></td></tr>
+<tr class="memdesc:ab24077addd3b7b13e086987ff296552c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This typedef represents the data type WORD.  <a href="../../d7/d8f/_t_types_8h.html#ab24077addd3b7b13e086987ff296552c">More...</a><br /></td></tr>
+<tr class="separator:ab24077addd3b7b13e086987ff296552c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af483253b2143078cede883fc3c111ad2"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#af483253b2143078cede883fc3c111ad2">DWORD</a></td></tr>
+<tr class="memdesc:af483253b2143078cede883fc3c111ad2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This typedef represents the data type DWORD.  <a href="../../d7/d8f/_t_types_8h.html#af483253b2143078cede883fc3c111ad2">More...</a><br /></td></tr>
+<tr class="separator:af483253b2143078cede883fc3c111ad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca6f268a6a107bbd356a13da7e03befd"><td class="memItemLeft" align="right" valign="top">typedef uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#aca6f268a6a107bbd356a13da7e03befd">QWORD</a></td></tr>
+<tr class="memdesc:aca6f268a6a107bbd356a13da7e03befd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This typedef represents the data type QWORD.  <a href="../../d7/d8f/_t_types_8h.html#aca6f268a6a107bbd356a13da7e03befd">More...</a><br /></td></tr>
+<tr class="separator:aca6f268a6a107bbd356a13da7e03befd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab66ae93ccab836cea488042bde4fe8f5"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="../../d7/d8f/_t_types_8h.html#aebb9e13210d88d43e32e735ada43a425">CHAR</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d8f/_t_types_8h.html#ab66ae93ccab836cea488042bde4fe8f5">STRING</a></td></tr>
 <tr class="memdesc:ab66ae93ccab836cea488042bde4fe8f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro represents the FPC data type STRING.  <a href="../../d7/d8f/_t_types_8h.html#ab66ae93ccab836cea488042bde4fe8f5">More...</a><br /></td></tr>
 <tr class="separator:ab66ae93ccab836cea488042bde4fe8f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -117,6 +145,29 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition in file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="afdc497c22d986ed1d5fcd8e698052233"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdc497c22d986ed1d5fcd8e698052233">&#9670;&nbsp;</a></span>END_CRT_NS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define END_CRT_NS&#160;&#160;&#160;}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This macro simple define the end of an C++ namespace scope. </p>
+<p><br  />
+ It is developer desire beatifuier. Nothing else.</p>
+<dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00102">102</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+
+</div>
+</div>
 <a id="a372a4d10383b63d0e7766bed900a46c4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a372a4d10383b63d0e7766bed900a46c4">&#9670;&nbsp;</a></span>END_MANGLE</h2>
 
@@ -135,7 +186,30 @@ Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00080">80</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00081">81</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+
+</div>
+</div>
+<a id="a3273fc65c0cf4dcf6788c63781288e7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3273fc65c0cf4dcf6788c63781288e7c">&#9670;&nbsp;</a></span>END_RTL_NS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define END_RTL_NS&#160;&#160;&#160;}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This macro simple define the end of an C++ namespace scope. </p>
+<p><br  />
+ It is developer desire beatifuier. Nothing else.</p>
+<dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00123">123</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -151,13 +225,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This macro simple define the end of an C++ namespace scope It is developer desire beatifuier. </p>
-<p>Nothing else.</p>
+<p>This macro simple define the end of an C++ namespace scope. </p>
+<p><br  />
+ It is developer desire beatifuier. Nothing else.</p>
 <dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00101">101</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00144">144</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -179,7 +254,7 @@ Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00050">50</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00051">51</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -204,7 +279,7 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;_$dll$laz_ ## y ## $ ## x()</td>
+          <td></td><td>&#160;&#160;&#160;_$dll$laz_ ## y ## $ ## x</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -224,12 +299,12 @@ Functions</h2></td></tr>
 <li>vcl, and many more</li>
 </ul>
 <p><b>Example</b>: </p><div class="fragment"><div class="line"><a class="code" href="../../d7/d8f/_t_types_8h.html#a50e9b6f90dd0a814c75faae10883a9cc">FPC_DLLFUNC</a>(TForm_Create,vcl)</div>
-<div class="ttc" id="a_t_types_8h_html_a50e9b6f90dd0a814c75faae10883a9cc"><div class="ttname"><a href="../../d7/d8f/_t_types_8h.html#a50e9b6f90dd0a814c75faae10883a9cc">FPC_DLLFUNC</a></div><div class="ttdeci">#define FPC_DLLFUNC(x, y)</div><div class="ttdoc">FPC produce prefix code for each DLL class export; This macro hold proper code for maintain / readabl...</div><div class="ttdef"><b>Definition:</b> <a href="../../d7/d8f/_t_types_8h_source.html#l00040">TTypes.h:40</a></div></div>
+<div class="ttc" id="a_t_types_8h_html_a50e9b6f90dd0a814c75faae10883a9cc"><div class="ttname"><a href="../../d7/d8f/_t_types_8h.html#a50e9b6f90dd0a814c75faae10883a9cc">FPC_DLLFUNC</a></div><div class="ttdeci">#define FPC_DLLFUNC(x, y)</div><div class="ttdoc">FPC produce prefix code for each DLL class export; This macro hold proper code for maintain / readabl...</div><div class="ttdef"><b>Definition:</b> <a href="../../d7/d8f/_t_types_8h_source.html#l00041">TTypes.h:41</a></div></div>
 </div><!-- fragment --><dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00040">40</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00041">41</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -251,7 +326,31 @@ Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00060">60</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00061">61</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+
+</div>
+</div>
+<a id="a7a232c868cf2ecb45f1cfd4753362bff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a232c868cf2ecb45f1cfd4753362bff">&#9670;&nbsp;</a></span>START_CRT_NS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define START_CRT_NS&#160;&#160;&#160;namespace LazCRT {</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This macro helps, to indicate the different namespace used for C++ mangled scope, <br  />
+and the differnt packages (here the LazCRT)<br  />
+ It is developer desire beatifuier. </p>
+<p>Nothing else.</p>
+<dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00092">92</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -273,7 +372,31 @@ Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00070">70</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00071">71</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+
+</div>
+</div>
+<a id="acc315e63b1cd642f01a1ce333bda3396"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc315e63b1cd642f01a1ce333bda3396">&#9670;&nbsp;</a></span>START_RTL_NS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define START_RTL_NS&#160;&#160;&#160;namespace LazVCL {</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This macro helps, to indicate the different namespace used for C++ mangled scope, <br  />
+and the differnt packages (here the LazRTL)<br  />
+ It is developer desire beatifuier. </p>
+<p>Nothing else.</p>
+<dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00113">113</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -289,13 +412,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This macro helps, to indicate the different namespace used for C++ mangled scope, and the differnt packages (here the LazVCL) It is developer desire beatifuier. </p>
+<p>This macro helps, to indicate the different namespace used for C++ mangled scope, <br  />
+and the differnt packages (here the LazVCL)<br  />
+ It is developer desire beatifuier. </p>
 <p>Nothing else.</p>
 <dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00091">91</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00134">134</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -318,7 +443,7 @@ Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00117">117</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00160">160</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -340,7 +465,51 @@ Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00125">125</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00168">168</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+
+</div>
+</div>
+<a id="af483253b2143078cede883fc3c111ad2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af483253b2143078cede883fc3c111ad2">&#9670;&nbsp;</a></span>DWORD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint32_t <a class="el" href="../../d7/d8f/_t_types_8h.html#af483253b2143078cede883fc3c111ad2">DWORD</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This typedef represents the data type DWORD. </p>
+<p><br  />
+ DWORD (double word) is a 32-bit data type. </p><dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00184">184</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+
+</div>
+</div>
+<a id="aca6f268a6a107bbd356a13da7e03befd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca6f268a6a107bbd356a13da7e03befd">&#9670;&nbsp;</a></span>QWORD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint64_t <a class="el" href="../../d7/d8f/_t_types_8h.html#aca6f268a6a107bbd356a13da7e03befd">QWORD</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This typedef represents the data type QWORD. </p>
+<p><br  />
+ QWORD (quad word) is a 64-bit data type. </p><dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00192">192</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -358,12 +527,12 @@ Functions</h2></td></tr>
 
 <p>This macro represents the FPC data type STRING. </p>
 <p><br  />
- STRING has limited length of 255 Bytes. Internal, it is declared in structure SHORTSTRING.<br  />
+ STRING has limited length of 255 Bytes. Internal, it is declared in structure <a class="el" href="../../d8/de1/struct_t_d___s_h_o_r_t_s_t_r_i_n_g.html" title="This typedef represents the FPC data type SHORTSTRING structure.">TD_SHORTSTRING</a>.<br  />
  Internal handled as char pointer type: char*. </p><dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00135">135</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00202">202</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -384,7 +553,29 @@ Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00109">109</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00152">152</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
+
+</div>
+</div>
+<a id="ab24077addd3b7b13e086987ff296552c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab24077addd3b7b13e086987ff296552c">&#9670;&nbsp;</a></span>WORD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint16_t <a class="el" href="../../d7/d8f/_t_types_8h.html#ab24077addd3b7b13e086987ff296552c">WORD</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This typedef represents the data type WORD. </p>
+<p><br  />
+ WORD is a 16-bit data type. </p><dl class="section author"><dt>Author</dt><dd>paule32 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2021-02-25 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d7/d8f/_t_types_8h_source.html#l00176">176</a> of file <a class="el" href="../../d7/d8f/_t_types_8h_source.html">TTypes.h</a>.</p>
 
 </div>
 </div>
@@ -425,7 +616,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Feb 26 2021 01:06:48 for FPC / C++ Borland VCL by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Fri Feb 26 2021 14:42:42 for FPC / C++ Borland VCL by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

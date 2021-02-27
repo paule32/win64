@@ -12,14 +12,7 @@ interface
 uses
 	Windows;
 
-type
-	// TObject is the base of all classes
-	TObject = class
-	public
-		constructor Create;
-		procedure TestA;
-	end;
-  
+type  
 	// TForm a graphicaly window formular
 	TForm = class
 	public
@@ -28,9 +21,6 @@ type
 
 implementation
 
-constructor TObject.Create; [alias: 'TObject_Create']; external 'laz_vcl.dll' name 'TObject_Create';
-constructor TForm  .Create; [alias: 'TForm_Create'  ]; external 'laz_vcl.dll' name 'TForm_Create';
-
-procedure TObject.TestA; external 'laz_vcl.dll' name 'TestA';
+constructor TForm.Create; [alias: 'TForm_Create'  ]; external 'laz_vcl.dll' name 'TForm_Create';
 
 end.

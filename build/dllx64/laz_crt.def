@@ -1,0 +1,12 @@
+EXPORTS
+_$dll$laz_crt$LazExitProcess
+_$dll$laz_crt$WriteLn
+fpc_ansistr_decr_ref
+fpc_do_exit
+FPC_DO_EXIT
+fpc_get_input
+fpc_initializeunits
+FPC_INITIALIZEUNITS
+fpc_iocheck
+fpc_readln_end
+FPC_READLN_END

@@ -6,7 +6,6 @@
 // ----------------------------------------------------------
 # include "TTypes.h"
 # include "TObject.h"
-# include "TForm.h"
 
 START_MANGLE
 START_VCL_NS

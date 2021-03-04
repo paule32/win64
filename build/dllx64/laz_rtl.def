@@ -6,5 +6,6 @@ _$dll$laz_rtl$LengthChar
 _$dll$laz_rtl$LengthInteger
 _$dll$laz_rtl$LengthString
 _$dll$laz_rtl$LowerCase
+_$dll$laz_rtl$ReadLn
 _$dll$laz_rtl$UpperCase
 _$dll$laz_rtl$WriteLn

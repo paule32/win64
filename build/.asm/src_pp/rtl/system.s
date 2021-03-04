@@ -9,11 +9,11 @@ SYSTEM$_$TVMT_$__$$_GETVPARENT$$PVMT:
 # Var $result located in register rax
 # Var $self located in register rcx
 # [system.pas]
-# [249] begin
+# [241] begin
 # Var $result located in register rax
-# [250] result := nil;
+# [242] result := nil;
 	xorl	%eax,%eax
-# [251] end;
+# [243] end;
 	ret
 .Lc2:
 
@@ -23,11 +23,11 @@ SYSTEM$_$TVMT_$__$$_GETVPARENT$$PVMT:
 fpc_get_input:
 .Lc3:
 # Var $result located in register rax
-# [254] begin
+# [246] begin
 # Var $result located in register rax
-# [255] result := nil;
+# [247] result := nil;
 	xorl	%eax,%eax
-# [256] end;
+# [248] end;
 	ret
 .Lc4:
 
@@ -38,10 +38,9 @@ fpc_readln_end:
 .globl	FPC_READLN_END
 FPC_READLN_END:
 .Lc5:
-# [259] begin
+# [251] begin end;
 	movq	%rcx,%rax
 # Var f located in register rax
-# [260] end;
 	ret
 .Lc6:
 
@@ -52,91 +51,79 @@ fpc_do_exit:
 .globl	FPC_DO_EXIT
 FPC_DO_EXIT:
 .Lc7:
-.seh_proc fpc_do_exit
-# [263] begin
-	leaq	-40(%rsp),%rsp
-.Lc9:
-.seh_stackalloc 40
-.seh_endprologue
-# [264] ExitProcess(0);
-	xorl	%ecx,%ecx
-	call	_$dll$kernel32$ExitProcess
-# [265] end;
-	nop
-	leaq	40(%rsp),%rsp
+# [254] begin end;
 	ret
-.seh_endproc
 .Lc8:
 
 .section .text.n_fpc_iocheck,"x"
 	.balign 16,0x90
 .globl	fpc_iocheck
 fpc_iocheck:
-.Lc10:
-# [268] begin end;
+.Lc9:
+# [257] begin end;
 	ret
-.Lc11:
+.Lc10:
 
 .section .text.n_fpc_ansistr_decr_ref,"x"
 	.balign 16,0x90
 .globl	fpc_ansistr_decr_ref
 fpc_ansistr_decr_ref:
-.Lc12:
-# [271] begin end;
+.Lc11:
+# [260] begin end;
 	movq	%rcx,%rax
 # Var S located in register rax
 	ret
-.Lc13:
+.Lc12:
 
 .section .text.n_fpc_help_constructor,"x"
 	.balign 16,0x90
 .globl	fpc_help_constructor
 fpc_help_constructor:
-.Lc14:
+.Lc13:
 # Var $result located in register rax
 # Var _self located in register rcx
 # Var _vmt located in register rdx
 # Var _vmt_pos located in register r8d
-# [277] begin result := nil end;
+# [266] begin result := nil end;
 # Var $result located in register rax
 	xorl	%eax,%eax
 	ret
-.Lc15:
+.Lc14:
 
 .section .text.n_fpc_help_destructor,"x"
 	.balign 16,0x90
 .globl	fpc_help_destructor
 fpc_help_destructor:
-.Lc16:
-# [280] begin end;
+.Lc15:
+# [269] begin end;
 	movq	%rcx,%rax
 # Var _self located in register rax
 # Var _vmt located in register rdx
 # Var vmt_pos located in register r8d
 	ret
-.Lc17:
+.Lc16:
 
 .section .text.n_fpc_help_fail,"x"
 	.balign 16,0x90
 .globl	fpc_help_fail
 fpc_help_fail:
-.Lc18:
-# [283] begin end;
+.Lc17:
+# [272] begin end;
 	movq	%rcx,%rax
 # Var _self located in register rax
 # Var _vmt located in register rdx
 # Var vmt_pos located in register r8d
 	ret
-.Lc19:
+.Lc18:
 
 .section .text.n_fpc_reraise,"x"
 	.balign 16,0x90
 .globl	fpc_reraise
 fpc_reraise:
-.Lc20:
-# [286] begin end;
+.Lc19:
+# [275] begin end;
 	ret
-.Lc21:
+.Lc20:
 # End asmlist al_procedures
 # Begin asmlist al_rtti
 
@@ -145,7 +132,7 @@ fpc_reraise:
 .globl	RTTI_$SYSTEM_$$_formal
 RTTI_$SYSTEM_$$_formal:
 	.byte	0,7
-# [289] 
+# [278] 
 	.ascii	"$formal"
 
 .section .rodata.n_RTTI_$SYSTEM_$$_typedformal,"d"
@@ -1994,9 +1981,9 @@ RTTI_$SYSTEM_$$_PPVMT$indirect:
 # Begin asmlist al_dwarf_frame
 
 .section .debug_frame
+.Lc21:
+	.long	.Lc23-.Lc22
 .Lc22:
-	.long	.Lc24-.Lc23
-.Lc23:
 	.long	-1
 	.byte	1
 	.byte	0
@@ -2010,80 +1997,76 @@ RTTI_$SYSTEM_$$_PPVMT$indirect:
 	.uleb128	16
 	.uleb128	2
 	.balign 4,0
+.Lc23:
+	.long	.Lc25-.Lc24
 .Lc24:
-	.long	.Lc26-.Lc25
-.Lc25:
-	.secrel32	.Lc22
+	.secrel32	.Lc21
 	.quad	.Lc1
 	.quad	.Lc2-.Lc1
 	.balign 4,0
+.Lc25:
+	.long	.Lc27-.Lc26
 .Lc26:
-	.long	.Lc28-.Lc27
-.Lc27:
-	.secrel32	.Lc22
+	.secrel32	.Lc21
 	.quad	.Lc3
 	.quad	.Lc4-.Lc3
 	.balign 4,0
+.Lc27:
+	.long	.Lc29-.Lc28
 .Lc28:
-	.long	.Lc30-.Lc29
-.Lc29:
-	.secrel32	.Lc22
+	.secrel32	.Lc21
 	.quad	.Lc5
 	.quad	.Lc6-.Lc5
 	.balign 4,0
+.Lc29:
+	.long	.Lc31-.Lc30
 .Lc30:
-	.long	.Lc32-.Lc31
-.Lc31:
-	.secrel32	.Lc22
+	.secrel32	.Lc21
 	.quad	.Lc7
 	.quad	.Lc8-.Lc7
-	.byte	4
-	.long	.Lc9-.Lc7
-	.byte	14
-	.uleb128	48
 	.balign 4,0
+.Lc31:
+	.long	.Lc33-.Lc32
 .Lc32:
-	.long	.Lc34-.Lc33
+	.secrel32	.Lc21
+	.quad	.Lc9
+	.quad	.Lc10-.Lc9
+	.balign 4,0
 .Lc33:
-	.secrel32	.Lc22
-	.quad	.Lc10
-	.quad	.Lc11-.Lc10
-	.balign 4,0
+	.long	.Lc35-.Lc34
 .Lc34:
-	.long	.Lc36-.Lc35
+	.secrel32	.Lc21
+	.quad	.Lc11
+	.quad	.Lc12-.Lc11
+	.balign 4,0
 .Lc35:
-	.secrel32	.Lc22
-	.quad	.Lc12
-	.quad	.Lc13-.Lc12
-	.balign 4,0
+	.long	.Lc37-.Lc36
 .Lc36:
-	.long	.Lc38-.Lc37
+	.secrel32	.Lc21
+	.quad	.Lc13
+	.quad	.Lc14-.Lc13
+	.balign 4,0
 .Lc37:
-	.secrel32	.Lc22
-	.quad	.Lc14
-	.quad	.Lc15-.Lc14
-	.balign 4,0
+	.long	.Lc39-.Lc38
 .Lc38:
-	.long	.Lc40-.Lc39
+	.secrel32	.Lc21
+	.quad	.Lc15
+	.quad	.Lc16-.Lc15
+	.balign 4,0
 .Lc39:
-	.secrel32	.Lc22
-	.quad	.Lc16
-	.quad	.Lc17-.Lc16
-	.balign 4,0
+	.long	.Lc41-.Lc40
 .Lc40:
-	.long	.Lc42-.Lc41
+	.secrel32	.Lc21
+	.quad	.Lc17
+	.quad	.Lc18-.Lc17
+	.balign 4,0
 .Lc41:
-	.secrel32	.Lc22
-	.quad	.Lc18
-	.quad	.Lc19-.Lc18
-	.balign 4,0
+	.long	.Lc43-.Lc42
 .Lc42:
-	.long	.Lc44-.Lc43
-.Lc43:
-	.secrel32	.Lc22
-	.quad	.Lc20
-	.quad	.Lc21-.Lc20
+	.secrel32	.Lc21
+	.quad	.Lc19
+	.quad	.Lc20-.Lc19
 	.balign 4,0
-.Lc44:
+.Lc43:
 # End asmlist al_dwarf_frame
 

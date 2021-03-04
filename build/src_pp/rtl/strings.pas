@@ -9,6 +9,8 @@ unit strings;
 
 interface
 
+procedure ClrScr; cdecl; external 'laz_rtl.dll' name 'LazClrScr';
+
 procedure LazExitProcess(ExitCode: LongInt); cdecl; external 'laz_rtl.dll' name 'LazExitProcess';
 
 function Length(const s: String          ): Integer; overload; cdecl; external 'laz_rtl.dll' name 'LengthString';
@@ -20,6 +22,7 @@ function Length(const s: Array of String ): Integer; overload; cdecl; external '
 function LowerCase(const s: String): String ; cdecl; external 'laz_rtl.dll' name 'LowerCase';
 function UpperCase(const s: String): String ; cdecl; external 'laz_rtl.dll' name 'UpperCase';
 
+function  ReadLn   : String ; cdecl; external 'laz_rtl.dll' name 'ReadLn';
 procedure WriteLn(s: String); cdecl; external 'laz_rtl.dll' name 'WriteLn';
 
 implementation

@@ -1,9 +1,7 @@
 // ----------------------------------------------------------
 // This file is part of RTL.
 //
-// (c) Copyright 2003 Florian Klaempfl
 // (c) Copyright 2021 Jens Kallup - paule32
-//
 // only for non-profit usage !!!
 // ----------------------------------------------------------
 {$mode delphi}
@@ -218,9 +216,6 @@ type
 		property vParent: PVmt read GetvParent;
 	end;
 
-// win32api kernel32.dll:
-procedure ExitProcess(ExitCode: LongInt); stdcall; external 'kernel32.dll' name 'ExitProcess';
-
 procedure fpc_ansistr_decr_ref(Var S : Pointer); compilerproc;
 
 function  fpc_get_input: PText;         compilerproc;
@@ -242,9 +237,6 @@ procedure fpc_do_exit; compilerproc;
 
 implementation
 
-//uses
-//  sysutils;
-
 function TVmt.GetvParent: PVMT;
 begin
 	result := nil;
@@ -256,13 +248,10 @@ begin
 end;
 
 procedure fpc_readln_end(var f: Text); [public,alias:'FPC_READLN_END']; iocheck; compilerproc;
-begin
-end;
+begin end;
 
 procedure fpc_do_exit; alias: 'FPC_DO_EXIT'; compilerproc;
-begin
-  ExitProcess(0);
-end;
+begin end;
 
 procedure fpc_iocheck; compilerproc;
 begin end;

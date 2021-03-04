@@ -7,12 +7,10 @@ uses
 begin
  Length('hallo');
  WriteLn('meerjung');
+ ReadLn;
 
   asm
     movl $1, %ecx
-    call LazExitProcess
-    nop
-    movl $2, %ecx
     call LazExitProcess
     nop
   end;

@@ -10,6 +10,9 @@
 # include "TTypes.h"
 # include <windows.h>
 
+void * __gxx_personality_v0 = 0;	// dummy
+void * _Unwind_Resume       = 0;	// flummy
+
 void *operator new(size_t size)
 {
 	void *ptr = nullptr;
@@ -32,6 +35,8 @@ void *operator new[](size_t size)
 	return ptr;
 }
 
+void operator delete(void *ptr, size_t size)   { delete(ptr); }
+void operator delete[](void *ptr, size_t size) { delete[]ptr; }
 void operator delete(void *ptr)
 {
 	if (!VirtualFree(ptr,0,MEM_RELEASE)) {

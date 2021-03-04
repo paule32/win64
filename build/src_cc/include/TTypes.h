@@ -8,6 +8,10 @@
 # include <stdint.h>
 # include <windows.h>
 
+#ifndef MOUSE_HWHEELED
+# define MOUSE_HWHEELED 0x0008
+#endif
+
 /** @file    TTypes.h
  *  @brief   some macros, and typedef's for better source
  *           maintain / readable.
@@ -51,6 +55,16 @@
  */
 # define FPC_BEGIN {
 
+/** @brief   This macro simple define the end of an C scope, and begin a else new.
+ *           It is developer desire beatifier the code.
+ *           Nothing else.
+ *
+ *  @author  paule32
+ *  @date    2021-02-25
+ *  @version 1.0
+ */
+# define FPC_ELSE } else {
+
 /** @brief   This macro simple define the end of an C scope.
  *           It is developer desire beatifier the code.
  *           Nothing else.
@@ -90,7 +104,7 @@
  *  @date    2021-02-25
  *  @version 1.0
  */
-# define START_CRT_NS namespace LazCRT {
+# define START_FPC_NS namespace LazFPC {
 
 /** @brief   This macro simple define the end of an C++ namespace scope.<br>
  *           It is developer desire beatifuier.
@@ -100,7 +114,28 @@
  *  @date    2021-02-25
  *  @version 1.0
  */
-# define END_CRT_NS   }
+# define END_FPC_NS   }
+
+/** @brief   This macro helps, to indicate the different namespace used for
+ *           C++ mangled scope, <br>and the differnt packages (here the LazCRT)<br>
+ *           It is developer desire beatifuier.
+ *           Nothing else.
+ *
+ *  @author  paule32
+ *  @date    2021-02-25
+ *  @version 1.0
+ */
+# define START_FPV_NS namespace LazFPV {
+
+/** @brief   This macro simple define the end of an C++ namespace scope.<br>
+ *           It is developer desire beatifuier.
+ *           Nothing else.
+ *
+ *  @author  paule32
+ *  @date    2021-02-25
+ *  @version 1.0
+ */
+# define END_FPV_NS   }
 
 /** @brief   This macro helps, to indicate the different namespace used for
  *           C++ mangled scope, <br>and the differnt packages (here the LazQT5)<br>
@@ -315,12 +350,22 @@ typedef struct {
  */
 extern "C" LazSTRING CopyPascalString2PChar(LazSTRING s);
 
+extern "C" LazVOID FPC_DLLFUNC(LazClrScr,rtl)();
+extern "C" LazVOID FPC_DLLFUNC(LazExitProcess,rtl)(LazINTEGER s);
+
 typedef struct {
 	HANDLE  std_output;
 	HANDLE  std_input;
 	HANDLE  std_error;
-	
 	BOOL    is_open;
+	
+	LazSTRING  charInputBuffer;
+	LazINTEGER charInputBuffer_Start;
 } LazTerminalStruct;
 
 extern LazTerminalStruct LazTerminal;
+extern LazSHORTSTRING    LazStringImg;
+
+
+
+extern char *strcpy(char *dest, const char *src);

@@ -25,7 +25,7 @@ FPC_BEGIN
 	ExitProcess(s);
 FPC_END
 
-void LAZEXITPROCEDURE(uint32_t ExitCode)
+LazVOID LAZEXITPROCEDURE(uint32_t ExitCode)
 FPC_BEGIN
 	FPC_DLLFUNC(LazExitProcess,rtl)(ExitCode);
 FPC_END
@@ -58,6 +58,68 @@ LazBOOL isspace(char c)
 }
 
 /**
+ * strcpy - Copy a %NUL terminated string
+ * @dest: Where to copy the string to
+ * @src: Where to copy the string from
+ */
+char *strcpy(char *dest, const char *src)
+{
+	char *tmp = dest;
+
+	while ((*dest++ = *src++) != '\0');
+	return tmp;
+}
+
+/**
+ * strncpy - Copy a length-limited, C-string
+ * @dest: Where to copy the string to
+ * @src: Where to copy the string from
+ * @count: The maximum number of bytes to copy
+ *
+ * The result is not %NUL-terminated if the source exceeds
+ * @count bytes.
+ *
+ * In the case where the length of @src is less than  that  of
+ * count, the remainder of @dest will be padded with %NUL.
+ *
+ */
+char *strncpy(char *dest, const char *src, size_t count)
+{
+	char *tmp = dest;
+
+	while (count) {
+		if ((*tmp = *src) != 0)
+			src++;
+		tmp++;
+		count--;
+	}
+	return dest;
+}
+
+/**
+ * strlcpy - Copy a C-string into a sized buffer
+ * @dest: Where to copy the string to
+ * @src: Where to copy the string from
+ * @size: size of destination buffer
+ *
+ * Compatible with ``*BSD``: the result is always a valid
+ * NUL-terminated string that fits in the buffer (unless,
+ * of course, the buffer size is zero). It does not pad
+ * out the result like strncpy() does.
+ */
+size_t strlcpy(char *dest, const char *src, size_t size)
+{
+	size_t ret = strlen(src);
+
+	if (size) {
+		size_t len = (ret >= size) ? size - 1 : ret;
+		LazMemCpy(dest, src, len);
+		dest[len] = '\0';
+	}
+	return ret;
+}
+
+/**
  * strcat - Append one %NUL-terminated string to another
  * @dest: The string to be appended to
  * @src:  The string to append to it
@@ -71,6 +133,54 @@ LazSTRING strcat(
 	while (*dest)	dest++;
 	while ((*dest++ = *src++) != '\0');
 	return tmp;
+}
+
+/**
+ * strncat - Append a length-limited, C-string to another
+ * @dest: The string to be appended to
+ * @src: The string to append to it
+ * @count: The maximum numbers of bytes to copy
+ *
+ * Note that in contrast to strncpy(), strncat() ensures the result is
+ * terminated.
+ */
+char *strncat(char *dest, const char *src, size_t count)
+{
+	char *tmp = dest;
+
+	if (count) {
+		while (*dest)
+			dest++;
+		while ((*dest++ = *src++) != 0) {
+			if (--count == 0) {
+				*dest = '\0';
+				break;
+			}
+		}
+	}
+	return tmp;
+}
+
+/**
+ * strncmp - Compare two length-limited strings
+ * @cs: One string
+ * @ct: Another string
+ * @count: The maximum number of bytes to compare
+ */
+int strncmp(const char *cs, const char *ct, size_t count)
+{
+	unsigned char c1, c2;
+
+	while (count) {
+		c1 = *cs++;
+		c2 = *ct++;
+		if (c1 != c2)
+			return c1 < c2 ? -1 : 1;
+		if (!c1)
+			break;
+		count--;
+	}
+	return 0;
 }
 
 /**
@@ -196,8 +306,8 @@ strreplace(LazSTRING s, char old, char _new)
 // ----------------------------------------------------------
 // this function check, if windows can create std handles...
 // ----------------------------------------------------------
-static void check_console()
-{
+LazVOID check_console()
+FPC_BEGIN
 	HANDLE dw;
 	if (!LazTerminal.is_open) {
 		if (
@@ -244,7 +354,7 @@ static void check_console()
 
 	AttachConsole(ATTACH_PARENT_PROCESS);
 	LazTerminal.is_open = TRUE;
-}
+FPC_END
 
 // ----------------------------------------------------------
 // WriteLn - display text in console.
@@ -260,6 +370,151 @@ FPC_BEGIN
 		LazTerminal.std_output,
 		s, len, &i,
 		NULL);
+FPC_END
+
+
+LazVOID MouseEventProc(MOUSE_EVENT_RECORD mouse_rec)
+FPC_BEGIN
+	switch (mouse_rec.dwEventFlags)
+    {
+        case 0:
+            //wprintf(Lbutton press!\n);
+            break;
+
+        case DOUBLE_CLICK:
+            //wprintf(Ldouble click!\n);
+            break;
+
+        case MOUSE_HWHEELED:
+            //wprintf(Lhorizontal mouse wheel!\n);
+            break;
+
+        case MOUSE_MOVED:
+            //wprintf(Lmouse moved!\n);
+            break;
+
+        case MOUSE_WHEELED:
+            //wprintf(Lvertical mouse wheel!\n);
+            break;
+
+        default:
+            //wprintf(Lunknown\n);
+			break;
+    }
+FPC_END
+
+LazVOID KeyEventProc(KEY_EVENT_RECORD key_rec)
+FPC_BEGIN
+    if (key_rec.bKeyDown)
+	FPC_BEGIN
+		long unsigned int i;
+		char buffer[32];
+		wsprintf(buffer,"--> %d, %c\n",
+		key_rec.wVirtualKeyCode,
+		key_rec.wVirtualKeyCode);
+
+		WriteConsoleA(
+			LazTerminal.std_output,
+			buffer,
+			strlen(buffer), &i,
+			NULL);
+
+		// numbers
+		if ((key_rec.wVirtualKeyCode >= 0x30)
+		&&  (key_rec.wVirtualKeyCode <= 0x39)) {
+			MessageBox(NULL,"numerisch","Info",MB_OK);
+		}
+		// alpha
+		if ((key_rec.wVirtualKeyCode >= 0x41)
+		&&  (key_rec.wVirtualKeyCode <= 0x5a)) {
+			MessageBox(NULL,"alpha","Info",MB_OK);
+		}
+	FPC_ELSE
+		//wprintf(Lkey released!\n);
+	FPC_END
+FPC_END
+
+VOID ResizeEventProc(WINDOW_BUFFER_SIZE_RECORD wbsr)
+FPC_BEGIN
+    //wprintf(LResize event!\n);
+FPC_END
+
+// ----------------------------------------------------------
+// WriteLn - display text in console.
+// ----------------------------------------------------------
+LazCHAR* FPC_DLLFUNC(ReadLn,rtl)()
+FPC_BEGIN
+	check_console();
+
+	DWORD        charNumRead, i;
+	INPUT_RECORD irInBuffer[128]; 
+	int          counter = 0;
+	
+	// -----------------------------------------
+	// this buffer, stores the input characters
+	// typed into the console ...
+	// -----------------------------------------
+	LazTerminal.charInputBuffer       = new char[255];
+	LazTerminal.charInputBuffer_Start = 0;
+
+	if (!SetConsoleMode(
+		LazTerminal.std_input,
+		ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT)) {
+		MessageBox(NULL,
+		"Terminal operation set READ mode denied.\n"
+		"Can't get the input handle !",
+		"Error",MB_OK);
+		FPC_DLLFUNC(LazExitProcess,rtl)(GetLastError());
+	}
+
+	// looü to read, and handle the input events.
+	while (counter++ <= 100) {
+		// wait for the event
+		
+		if (!ReadConsoleInput(
+			LazTerminal.std_input,	// input buffer handle
+			irInBuffer, 			// buffer to read into
+			128,					// size of read buffer
+			&charNumRead)) {		// number records read
+			MessageBox(NULL,
+			"Terminal operation READ denied.\n"
+			"Can't get the input handle !",
+			"Error",MB_OK);
+			FPC_DLLFUNC(LazExitProcess,rtl)(GetLastError());
+		}
+		// dispatch the event's to the handler
+		for (i = 0; i < charNumRead; i++) {
+			switch (irInBuffer[i].EventType) {
+				// keyboard input
+				case KEY_EVENT:
+					KeyEventProc(irInBuffer[i].Event.KeyEvent);
+					break;
+					
+				// mouse input
+				case MOUSE_EVENT:
+					MouseEventProc(irInBuffer[i].Event.MouseEvent);
+					break;
+				
+				// screen buffer re-sizing
+				case WINDOW_BUFFER_SIZE_EVENT:
+					ResizeEventProc(irInBuffer[i].Event.WindowBufferSizeEvent);
+					break;
+				
+				// disregard focus event's
+				case FOCUS_EVENT:
+				
+				// disregard menu events:
+				case MENU_EVENT:
+					break;
+				
+				default:
+					FPC_DLLFUNC(LazExitProcess,rtl)
+					(GetLastError());
+					break;
+			}
+		}
+	}
+	return "";
 FPC_END
 
 // ----------------------------------------------------------

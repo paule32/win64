@@ -80,7 +80,9 @@ CPP_OUT  = $(OBJ_DIR)/$(CPP_SRC)
 INCLUDE  = $(CPP_SRC)/include
 CFLAGS  += \
 	-I$(INCLUDE)     \
+	-I$(INCLUDE)/fpc \
 	-I$(INCLUDE)/rtl \
+	-I$(INCLUDE)/fpv \
 	-I$(INCLUDE)/qt5 \
 	-I$(INCLUDE)/vcl \
 	-I$(INCLUDE)/win
@@ -89,12 +91,17 @@ CFLAGS  += \
 # the entiere source files ...
 # -------------------------------------
 CPP_SRC_FILES =                \
-	$(CPP_SRC)/c_crt.c         \
-	$(CPP_SRC)/SysUtils.c      \
+	$(CPP_SRC)/fpc/c_fpc.cc    \
+	$(CPP_SRC)/fpc/dllMain.cc  \
+	$(CPP_SRC)/fpc/SysUtils.cc \
 	\
 	$(CPP_SRC)/rtl/dllMain.cc  \
 	$(CPP_SRC)/rtl/mem.cc      \
+	$(CPP_SRC)/rtl/screen.cc   \
 	$(CPP_SRC)/rtl/strings.cc  \
+	\
+	$(CPP_SRC)/fpv/dllMain.cc  \
+	$(CPP_SRC)/fpv/TVision.cc  \
 	\
 	$(CPP_SRC)/qt5/dllMain.cc  \
 	$(CPP_SRC)/qt5/QObject.cc  \
@@ -109,12 +116,17 @@ CPP_SRC_FILES =                \
 	
 #
 CPP_ASM_FILES =               \
-	$(CPP_ASM)/c_crt.s        \
-	$(CPP_ASM)/SysUtils.s     \
+	$(CPP_ASM)/fpc/c_fpc.s    \
+	$(CPP_ASM)/fpc/dllMain.s  \
+	$(CPP_ASM)/fpc/SysUtils.s \
 	\
 	$(CPP_ASM)/rtl/dllMain.s  \
 	$(CPP_ASM)/rtl/mem.s      \
+	$(CPP_ASM)/rtl/screen.s   \
 	$(CPP_ASM)/rtl/strings.s  \
+	\
+	$(CPP_ASM)/fpv/dllMain.s  \
+	$(CPP_ASM)/fpv/TVision.s  \
 	\
 	$(CPP_ASM)/qt5/dllMain.s  \
 	$(CPP_ASM)/qt5/QObject.s  \
@@ -129,9 +141,11 @@ CPP_ASM_FILES =               \
 
 #
 PAS_SRC_FILES =                 \
-	$(PAS_SRC)/qt5/QObject.pas  \
-	\
 	$(PAS_SRC)/rtl/strings.pas  \
+	\
+	$(PAS_SRC)/fpv/TVision.pas  \
+	\
+	$(PAS_SRC)/qt5/QObject.pas  \
 	\
 	$(PAS_SRC)/vcl/TObject.pas  \
 	$(PAS_SRC)/vcl/Forms.pas    \
@@ -140,9 +154,12 @@ PAS_SRC_FILES =                 \
 	$(PAS_SRC)/win/Windows.pas
 #
 PAS_ASM_FILES =               \
-	$(PAS_ASM)/qt5/QObject.s  \
 	$(PAS_ASM)/rtl/strings.s  \
+	\
+	$(PAS_ASM)/fpv/TVision.s  \
+	\
 	$(PAS_ASM)/vcl/Forms.s    \
+	$(PAS_ASM)/qt5/QObject.s  \
 	\
 	$(PAS_ASM)/win/kernel32.s \
 	$(PAS_ASM)/win/Windows.s
@@ -151,12 +168,16 @@ PAS_ASM_FILES =               \
 # the corresponding .o bject files ...
 # -------------------------------------
 CPP_OBJ_FILES =               \
-	$(CPP_OUT)/c_crt.o        \
-	$(CPP_OUT)/SysUtils.o     \
+	$(CPP_OUT)/fpc/c_fpc.o    \
+	$(CPP_OUT)/fpc/dllMain.o  \
+	$(CPP_OUT)/fpc/SysUtils.o \
 	\
 	$(CPP_OUT)/rtl/dllMain.o  \
 	$(CPP_OUT)/rtl/mem.o      \
 	$(CPP_OUT)/rtl/strings.o  \
+	\
+	$(CPP_OUT)/fpv/dllMain.o  \
+	$(CPP_OUT)/fpv/TVision.o  \
 	\
 	$(CPP_OUT)/qt5/dllMain.o  \
 	$(CPP_OUT)/qt5/QObject.o  \
@@ -171,6 +192,7 @@ CPP_OBJ_FILES =               \
 #
 PAS_OBJ_FILES =               \
 	$(PAS_OUT)/rtl/strings.o  \
+	$(PAS_OUT)/fpv/TVision.o  \
 	\
 	$(PAS_OUT)/qt5/QObject.o  \
 	\
@@ -192,9 +214,15 @@ RTL_DLLOF = \
 	$(CPP_OUT)/rtl/strings.o \
 	$(CPP_OUT)/rtl/mem.o
 
-CRT_DLLOF = \
-	$(CPP_OUT)/c_crt.o    \
-	$(CPP_OUT)/SysUtils.o
+FPC_DLLOF = \
+	$(CPP_OUT)/fpc/c_fpc.o    \
+	$(CPP_OUT)/fpc/dllMain.o  \
+	$(CPP_OUT)/fpc/SysUtils.o
+
+FPV_DLLOF = \
+	$(CPP_OUT)/fpv/dllMain.o  \
+	$(CPP_OUT)/fpv/TVision.o  \
+	$(CPP_OUT)/rtl/mem.o
 
 QT5_DLLOF = \
 	$(CPP_OUT)/qt5/dllMain.o \
@@ -231,22 +259,33 @@ CWD        = $(shell pwd)
 UNIT_PAT   = $(subst /,\,$(subst /e/,e:\,$(CWD)))
 UNIT_DIR   = $(UNIT_PAT)
 #
-FPC_FLAGS += -Fu$(UNIT_DIR)/$(PAS_SRC)
+FPC_FLAGS += -Fu$(UNIT_DIR)/$(PAS_SRC)/fpc
+FPC_FLAGS += -Fu$(UNIT_DIR)/$(PAS_ASM)/rtl
+#
+FPC_FLAGS += -Fu$(UNIT_DIR)/$(PAS_ASM)/fpv
 FPC_FLAGS += -Fu$(UNIT_DIR)/$(PAS_ASM)/win
 FPC_FLAGS += -Fu$(UNIT_DIR)/$(PAS_ASM)/qt5
-FPC_FLAGS += -Fu$(UNIT_DIR)/$(PAS_ASM)/rtl
 FPC_FLAGS += -Fu$(UNIT_DIR)/$(PAS_ASM)/vcl
 #
 Laz_DOL = '$$'
 #
-Forms_TForm     =   FORMS$(Laz_DOL)_$(Laz_DOL)TOBJECT_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
-Objects_QObject = OBJECTS$(Laz_DOL)_$(Laz_DOL)QOBJECT_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
+Forms_TForm          =   FORMS$(Laz_DOL)_$(Laz_DOL)TOBJECT_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
+#
+TVision_TObject      = TVISION$(Laz_DOL)_$(Laz_DOL)TOBJECT_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
+TVision_TMenuBar     = TVISION$(Laz_DOL)_$(Laz_DOL)TMENUBAR_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
+TVision_TStatusBar   = TVISION$(Laz_DOL)_$(Laz_DOL)TSTATUSBAR_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
+TVision_TBackground  = TVISION$(Laz_DOL)_$(Laz_DOL)TBACKGROUND_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
+TVision_TApplication = TVISION$(Laz_DOL)_$(Laz_DOL)TAPPLICATION_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
+#
+Objects_QObject      = OBJECTS$(Laz_DOL)_$(Laz_DOL)QOBJECT_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
 
 Laz_DLL = _$(Laz_DOL)dll$(Laz_DOL)laz_
 #
-Laz_CRT = $(Laz_DLL)crt$(Laz_DOL)
-Laz_QT5 = $(Laz_DLL)qt5$(Laz_DOL)
+Laz_FPC = $(Laz_DLL)fpc$(Laz_DOL)
 Laz_RTL = $(Laz_DLL)rtl$(Laz_DOL)
+#
+Laz_FPV = $(Laz_DLL)fpv$(Laz_DOL)
+Laz_QT5 = $(Laz_DLL)qt5$(Laz_DOL)
 Laz_VCL = $(Laz_DLL)vcl$(Laz_DOL)
 Laz_WIN = $(Laz_DLL)win$(Laz_DOL)
 
@@ -262,7 +301,7 @@ endef
 # procedure get many extra informations, that are not needed;
 # so the size of the .dll file is smaller.
 # ----------------------------------------------------------------------
-define crt_def =
+define fpc_def =
 	$(ECHO) EXPORTS                        > $(1)
 	$(ECHO) fpc_ansistr_decr_ref          >> $(1)
 	$(ECHO) fpc_do_exit                   >> $(1)
@@ -287,8 +326,21 @@ define rtl_def =
 	$(ECHO) $(Laz_RTL)LengthInteger       >> $(1)
 	$(ECHO) $(Laz_RTL)LengthString        >> $(1)
 	$(ECHO) $(Laz_RTL)LowerCase           >> $(1)
+	$(ECHO) $(Laz_RTL)ReadLn              >> $(1)
 	$(ECHO) $(Laz_RTL)UpperCase           >> $(1)
 	$(ECHO) $(Laz_RTL)WriteLn             >> $(1)
+endef
+
+# ------------------------------------------------------
+# fpv - Free Pascal TurboVision - textual app's ...
+# ------------------------------------------------------
+define fpv_def =
+	$(ECHO) EXPORTS                        > $(1)
+	$(call dll_export,$(TVision_TObject),_CREATE,QWORDBOOL,$(1))
+	$(call dll_export,$(TVision_TMenuBar),_CREATE,QWORDBOOL,$(1))
+	$(call dll_export,$(TVision_TStatusBar),_CREATE,QWORDBOOL,$(1))
+	$(call dll_export,$(TVision_TBackground),_CREATE,QWORDBOOL,$(1))
+	$(call dll_export,$(TVision_TApplication),_CREATE,QWORDBOOL,$(1))
 endef
 
 # ------------------------------------------------------
@@ -428,22 +480,28 @@ REDI_NULL = > nul:
 DLL_DIR   = dllx64
 
 DLL_FILES = \
-	$(DLL_DIR)/laz_crt.dll \
+	$(DLL_DIR)/laz_fpc.dll \
 	$(DLL_DIR)/laz_rtl.dll \
+	\
+	$(DLL_DIR)/laz_fpv.dll \
 	$(DLL_DIR)/laz_qt5.dll \
 	$(DLL_DIR)/laz_vcl.dll \
 	$(DLL_DIR)/laz_win.dll
 	
 DEF_FILES = \
-	$(DLL_DIR)/laz_crt.def \
+	$(DLL_DIR)/laz_fpc.def \
 	$(DLL_DIR)/laz_rtl.def \
+	\
+	$(DLL_DIR)/laz_fpv.def \
 	$(DLL_DIR)/laz_qt5.def \
 	$(DLL_DIR)/laz_vcl.def \
 	$(DLL_DIR)/laz_win.def
 #
 ALD_FILES = \
-	$(DLL_DIR)/liblaz_crt.a \
+	$(DLL_DIR)/liblaz_fpc.a \
 	$(DLL_DIR)/liblaz_rtl.a \
+	\
+	$(DLL_DIR)/liblaz_fpv.a \
 	$(DLL_DIR)/liblaz_qt5.a \
 	$(DLL_DIR)/liblaz_vcl.a \
 	$(DLL_DIR)/liblaz_win.a
@@ -462,8 +520,10 @@ pre_tasks:									\
 # $(OBJ_FILES)
 # ---------------------------------------------
 $(DLL_FILES):
-$(DLL_DIR)/laz_crt.dll: $(CRT_DLLOF) ; $(call make_dll,$@,$^)
+$(DLL_DIR)/laz_fpc.dll: $(FPC_DLLOF) ; $(call make_dll,$@,$^)
 $(DLL_DIR)/laz_rtl.dll: $(RTL_DLLOF) ; $(call make_dll,$@,$^)
+#
+$(DLL_DIR)/laz_fpv.dll: $(FPV_DLLOF) ; $(call make_dll,$@,$^)
 $(DLL_DIR)/laz_qt5.dll: $(QT5_DLLOF) ; $(call make_dll,$@,$^)
 $(DLL_DIR)/laz_vcl.dll: $(VCL_DLLOF) ; $(call make_dll,$@,$^)
 $(DLL_DIR)/laz_win.dll: $(WIN_DLLOF) ; $(call make_dll,$@,$^)
@@ -472,8 +532,10 @@ $(DLL_DIR)/laz_win.dll: $(WIN_DLLOF) ; $(call make_dll,$@,$^)
 # template: create .def inition file for linker
 # ---------------------------------------------
 $(DEF_FILES):
-$(DLL_DIR)/laz_crt.def: $(DLL_DIR)/laz_crt.dll ; $(call crt_def,$@)
+$(DLL_DIR)/laz_fpc.def: $(DLL_DIR)/laz_fpc.dll ; $(call fpc_def,$@)
 $(DLL_DIR)/laz_rtl.def: $(DLL_DIR)/laz_rtl.dll ; $(call rtl_def,$@)
+#
+$(DLL_DIR)/laz_fpv.def: $(DLL_DIR)/laz_fpv.dll ; $(call fpv_def,$@)
 $(DLL_DIR)/laz_qt5.def: $(DLL_DIR)/laz_qt5.dll ; $(call qt5_def,$@)
 $(DLL_DIR)/laz_vcl.def: $(DLL_DIR)/laz_vcl.dll ; $(call vcl_def,$@)
 $(DLL_DIR)/laz_win.def: $(DLL_DIR)/laz_win.dll ; $(call win_def,$@)
@@ -482,8 +544,10 @@ $(DLL_DIR)/laz_win.def: $(DLL_DIR)/laz_win.dll ; $(call win_def,$@)
 # template: create .a rchive file for linker.
 # ---------------------------------------------
 $(ALD_FILES):
-$(DLL_DIR)/liblaz_crt.a: $(DLL_DIR)/laz_crt.def ; $(call dll_a,$@,$<)
+$(DLL_DIR)/liblaz_fpc.a: $(DLL_DIR)/laz_fpc.def ; $(call dll_a,$@,$<)
 $(DLL_DIR)/liblaz_rtl.a: $(DLL_DIR)/laz_rtl.def ; $(call dll_a,$@,$<)
+#
+$(DLL_DIR)/liblaz_fpv.a: $(DLL_DIR)/laz_fpv.def ; $(call dll_a,$@,$<)
 $(DLL_DIR)/liblaz_qt5.a: $(DLL_DIR)/laz_qt5.def ; $(call dll_a,$@,$<)
 $(DLL_DIR)/liblaz_vcl.a: $(DLL_DIR)/laz_vcl.def ; $(call dll_a,$@,$<)
 $(DLL_DIR)/liblaz_win.a: $(DLL_DIR)/laz_win.def ; $(call dll_a,$@,$<)
@@ -497,7 +561,10 @@ state_begin: clean premake
 # ---------------------------------------------
 # template: compile .pas to .s assembler.
 # ---------------------------------------------
+$(PAS_ASM)/fpc/%.s: $(PAS_SRC)/fpc/%.pas ; $(call pp_compile_strip,$@,$<)
 $(PAS_ASM)/rtl/%.s: $(PAS_SRC)/rtl/%.pas ; $(call pp_compile_strip,$@,$<)
+#
+$(PAS_ASM)/fpv/%.s: $(PAS_SRC)/fpv/%.pas ; $(call pp_compile_strip,$@,$<)
 $(PAS_ASM)/qt5/%.s: $(PAS_SRC)/qt5/%.pas ; $(call pp_compile_strip,$@,$<)
 $(PAS_ASM)/vcl/%.s: $(PAS_SRC)/vcl/%.pas ; $(call pp_compile_strip,$@,$<)
 $(PAS_ASM)/win/%.s: $(PAS_SRC)/win/%.pas ; $(call pp_compile_strip,$@,$<)
@@ -505,7 +572,10 @@ $(PAS_ASM)/win/%.s: $(PAS_SRC)/win/%.pas ; $(call pp_compile_strip,$@,$<)
 # ---------------------------------------------
 # template: compile PAS .s to .o bject file.
 # ---------------------------------------------
+$(PAS_OUT)/fpc/%.o: $(PAS_ASM)/fpc/%.s ; $(call compile_strip,$@,$<)
 $(PAS_OUT)/rtl/%.o: $(PAS_ASM)/rtl/%.s ; $(call compile_strip,$@,$<)
+#
+$(PAS_OUT)/fpv/%.o: $(PAS_ASM)/fpv/%.s ; $(call compile_strip,$@,$<)
 $(PAS_OUT)/qt5/%.o: $(PAS_ASM)/qt5/%.s ; $(call compile_strip,$@,$<)
 $(PAS_OUT)/vcl/%.o: $(PAS_ASM)/vcl/%.s ; $(call compile_strip,$@,$<)
 $(PAS_OUT)/win/%.o: $(PAS_ASM)/win/%.s ; $(call compile_strip,$@,$<)
@@ -513,23 +583,24 @@ $(PAS_OUT)/win/%.o: $(PAS_ASM)/win/%.s ; $(call compile_strip,$@,$<)
 # ---------------------------------------------
 # template: compile C .s to .o bject file.
 # ---------------------------------------------
+$(CPP_OUT)/fpc/%.o: $(CPP_ASM)/fpc/%.s ; $(call compile_strip,$@,$<)
 $(CPP_OUT)/rtl/%.o: $(CPP_ASM)/rtl/%.s ; $(call compile_strip,$@,$<)
+#
+$(CPP_OUT)/fpv/%.o: $(CPP_ASM)/fpv/%.s ; $(call compile_strip,$@,$<)
 $(CPP_OUT)/qt5/%.o: $(CPP_ASM)/qt5/%.s ; $(call compile_strip,$@,$<)
 $(CPP_OUT)/vcl/%.o: $(CPP_ASM)/vcl/%.s ; $(call compile_strip,$@,$<)
 $(CPP_OUT)/win/%.o: $(CPP_ASM)/win/%.s ; $(call compile_strip,$@,$<)
-#
-$(CPP_OUT)/%.o: $(CPP_ASM)/%.s ; $(call compile_strip,$@,$<)
 
 # ---------------------------------------------
 # template: compile C files to .s assembler.
 # ---------------------------------------------
+$(CPP_ASM)/fpc/%.s: $(CPP_SRC)/fpc/%.cc ; $(CC) $(CFLAGS) -S -o $@ $<
 $(CPP_ASM)/rtl/%.s: $(CPP_SRC)/rtl/%.cc ; $(CC) $(CFLAGS) -S -o $@ $<
+#
+$(CPP_ASM)/fpv/%.s: $(CPP_SRC)/fpv/%.cc ; $(CC) $(CFLAGS) -S -o $@ $<
 $(CPP_ASM)/qt5/%.s: $(CPP_SRC)/qt5/%.cc ; $(CC) $(CFLAGS) -S -o $@ $<
 $(CPP_ASM)/vcl/%.s: $(CPP_SRC)/vcl/%.cc ; $(CC) $(CFLAGS) -S -o $@ $<
 $(CPP_ASM)/win/%.s: $(CPP_SRC)/win/%.cc ; $(CC) $(CFLAGS) -S -o $@ $<
-#
-$(CPP_ASM)/%.s: $(CPP_SRC)/%.c  ; $(CC) $(CFLAGS) -o $@ -S $<
-$(CPP_ASM)/%.s: $(CPP_SRC)/%.cc ; $(CC) $(CFLAGS) -o $@ -S $<
 
 # ---------------------------------------------
 # This section is optional, compile some test
@@ -549,7 +620,7 @@ $(SAMPLE_DIR)/%$(EXEC_FILEEXT): $(OBJ_DIR)/test/%.o
 	$(CC) -nostartfiles -nostdlib       \
 		-Wl,--entry=PASCALMAIN -o $@ $^ \
 		-L$(DLL_DIR) \
-		-llaz_crt    \
+		-llaz_fpc    \
 		-llaz_rtl    \
 		-llaz_win    -lkernel32 -luser32
 	$(STRIP) $@
@@ -568,33 +639,23 @@ state_end: $(SAMPLE_EXE)
 docs:
 	doxygen devdoc.cfg
 
+# -------------------------------------------
+# this section, create temporary folder's ...
+# -------------------------------------------
+DIR_FOLDERS = \
+	$(OBJ_DIR)/$(CPP_SRC)		\
+	$(OBJ_DIR)/$(PAS_SRC)		\
+	$(ASM_DIR)/$(CPP_SRC)		\
+	$(ASM_DIR)/$(PAS_SRC)
+
+PRE_FOLDERS = fpc fpv qt5 rtl vcl win test
+
 premake:
-	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)
-	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)/qt5
-	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)/rtl
-	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)/vcl
-	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)/win
-	$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)/test
-	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)
-	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)/qt5
-	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)/rtl
-	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)/vcl
-	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)/win
-	$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)/test
-	$(MKDIR) $(OBJ_DIR)/test
-	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)
-	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)/qt5
-	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)/rtl
-	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)/vcl
-	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)/win
-	$(MKDIR) $(ASM_DIR)/$(CPP_SRC)/test
-	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)
-	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)/qt5
-	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)/rtl
-	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)/vcl
-	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)/win
-	$(MKDIR) $(ASM_DIR)/$(PAS_SRC)/test
-	$(MKDIR) $(ASM_DIR)/test
+	$(foreach folder,$(DIR_FOLDERS),$(MKDIR) $(folder) && ) true
+	$(foreach folder,$(PRE_FOLDERS),$(MKDIR) $(OBJ_DIR)/$(CPP_SRC)/$(folder) && ) true
+	$(foreach folder,$(PRE_FOLDERS),$(MKDIR) $(OBJ_DIR)/$(PAS_SRC)/$(folder) && ) true
+	$(foreach folder,$(PRE_FOLDERS),$(MKDIR) $(ASM_DIR)/$(CPP_SRC)/$(folder) && ) true
+	$(foreach folder,$(PRE_FOLDERS),$(MKDIR) $(ASM_DIR)/$(PAS_SRC)/$(folder) && ) true
 	$(MKDIR) $(DLL_DIR)
 
 # -------------------------------------------
@@ -602,34 +663,11 @@ premake:
 # -------------------------------------------
 clean:
 	@$(ECHO) delete source folder crap ...
-	$(RM)    $(OBJ_DIR)/$(CPP_SRC)/qt5
-	$(RM)    $(OBJ_DIR)/$(CPP_SRC)/rtl
-	$(RM)    $(OBJ_DIR)/$(CPP_SRC)/vcl
-	$(RM)    $(OBJ_DIR)/$(CPP_SRC)/win
-	$(RM)    $(OBJ_DIR)/$(CPP_SRC)/test
-	$(RM)    $(OBJ_DIR)/$(CPP_SRC)
-	$(RM)    $(OBJ_DIR)/$(PAS_SRC)/qt5
-	$(RM)    $(OBJ_DIR)/$(PAS_SRC)/rtl
-	$(RM)    $(OBJ_DIR)/$(PAS_SRC)/vcl
-	$(RM)    $(OBJ_DIR)/$(PAS_SRC)/win
-	$(RM)    $(OBJ_DIR)/$(PAS_SRC)/test
-	$(RM)    $(OBJ_DIR)/$(PAS_SRC)
-	$(RM)    $(OBJ_DIR)/test
-	$(RM)    $(OBJ_DIR)
-	$(RM)    $(ASM_DIR)/$(CPP_SRC)/qt5
-	$(RM)    $(ASM_DIR)/$(CPP_SRC)/rtl
-	$(RM)    $(ASM_DIR)/$(CPP_SRC)/vcl
-	$(RM)    $(ASM_DIR)/$(CPP_SRC)/win
-	$(RM)    $(ASM_DIR)/$(CPP_SRC)/test
-	$(RM)    $(ASM_DIR)/$(CPP_SRC)
-	$(RM)    $(ASM_DIR)/$(PAS_SRC)/qt5
-	$(RM)    $(ASM_DIR)/$(PAS_SRC)/rtl
-	$(RM)    $(ASM_DIR)/$(PAS_SRC)/vcl
-	$(RM)    $(ASM_DIR)/$(PAS_SRC)/win
-	$(RM)    $(ASM_DIR)/$(PAS_SRC)/test
-	$(RM)    $(ASM_DIR)/$(PAS_SRC)
-	$(RM)    $(ASM_DIR)/test
-	$(RM)    $(ASM_DIR)
-	$(RM)    $(DLL_DIR)
 	$(RM)    sample/*.exe
 	$(RM)    sample/*.dll
+	$(foreach folder,$(PRE_FOLDERS),$(RM) $(OBJ_DIR)/$(CPP_SRC)/$(folder) && ) true
+	$(foreach folder,$(PRE_FOLDERS),$(RM) $(OBJ_DIR)/$(PAS_SRC)/$(folder) && ) true
+	$(foreach folder,$(PRE_FOLDERS),$(RM) $(ASM_DIR)/$(CPP_SRC)/$(folder) && ) true
+	$(foreach folder,$(PRE_FOLDERS),$(RM) $(ASM_DIR)/$(PAS_SRC)/$(folder) && ) true
+	$(foreach folder,$(DIR_FOLDERS),$(RM) $(folder) && ) true
+	$(RM) $(DLL_DIR)

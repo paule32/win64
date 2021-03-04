@@ -10,17 +10,17 @@ _mainCRTStartup:
 .Lc1:
 .seh_proc SYSINIT_$$_ENTRY
 # [sysinit.pas]
-# [21] begin
+# [19] begin
 	leaq	-40(%rsp),%rsp
 .Lc3:
 .seh_stackalloc 40
 .seh_endprologue
-# [22] PascalMain;
+# [20] PascalMain;
 	call	PASCALMAIN
-# [23] LazExitProcess(0);
+# [21] LazExitProcess(0);
 	xorl	%ecx,%ecx
-	call	_$dll$laz_crt$LazExitProcess
-# [24] end;
+	call	_$dll$laz_rtl$LazExitProcess
+# [22] end;
 	nop
 	leaq	40(%rsp),%rsp
 	ret

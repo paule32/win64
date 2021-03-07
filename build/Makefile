@@ -221,6 +221,7 @@ FPC_DLLOF = \
 
 FPV_DLLOF = \
 	$(CPP_OUT)/fpv/dllMain.o  \
+	$(PAS_OUT)/fpv/TVision.o  \
 	$(CPP_OUT)/fpv/TVision.o  \
 	$(CPP_OUT)/rtl/mem.o
 
@@ -272,6 +273,7 @@ Laz_DOL = '$$'
 Forms_TForm          =   FORMS$(Laz_DOL)_$(Laz_DOL)TOBJECT_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
 #
 TVision_TObject      = TVISION$(Laz_DOL)_$(Laz_DOL)TOBJECT_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
+TVision_TPalette     = TVISION$(Laz_DOL)_$(Laz_DOL)TPALETTE_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
 TVision_TMenuBar     = TVISION$(Laz_DOL)_$(Laz_DOL)TMENUBAR_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
 TVision_TStatusBar   = TVISION$(Laz_DOL)_$(Laz_DOL)TSTATUSBAR_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
 TVision_TBackground  = TVISION$(Laz_DOL)_$(Laz_DOL)TBACKGROUND_$(Laz_DOL)__$(Laz_DOL)$(Laz_DOL)
@@ -337,10 +339,23 @@ endef
 define fpv_def =
 	$(ECHO) EXPORTS                        > $(1)
 	$(call dll_export,$(TVision_TObject),_CREATE,QWORDBOOL,$(1))
+	$(call dll_export,$(TVision_TPalette),_CREATE,QWORDBOOL,$(1))
 	$(call dll_export,$(TVision_TMenuBar),_CREATE,QWORDBOOL,$(1))
 	$(call dll_export,$(TVision_TStatusBar),_CREATE,QWORDBOOL,$(1))
 	$(call dll_export,$(TVision_TBackground),_CREATE,QWORDBOOL,$(1))
 	$(call dll_export,$(TVision_TApplication),_CREATE,QWORDBOOL,$(1))
+	#
+	$(call dll_export,$(TVision_TObject),_DESTROY,,$(1))
+	$(call dll_export,$(TVision_TPalette),_DESTROY,,$(1))
+	$(call dll_export,$(TVision_TMenuBar),_DESTROY,,$(1))
+	$(call dll_export,$(TVision_TStatusBar),_DESTROY,,$(1))
+	$(call dll_export,$(TVision_TBackground),_DESTROY,,$(1))
+	$(call dll_export,$(TVision_TApplication),_DESTROY,,$(1))
+	#
+	$(ECHO) $(Laz_FPV)LazSetPalette    >> $(1)
+	$(ECHO) $(Laz_FPV)LazSetBackground >> $(1)
+	$(ECHO) $(Laz_FPV)LazSetMenuBar    >> $(1)
+	$(ECHO) $(Laz_FPV)LazSetStatusBar  >> $(1)
 endef
 
 # ------------------------------------------------------

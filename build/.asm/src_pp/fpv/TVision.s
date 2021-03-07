@@ -76,19 +76,19 @@ TVISION$_$TAPPLICATION_$__$$_DESTROY:
 	.balign 16,0x90
 .globl	TVISION$_$TAPPLICATION_$__$$_SETFBACKGROUND$TBACKGROUND
 TVISION$_$TAPPLICATION_$__$$_SETFBACKGROUND$TBACKGROUND:
-	jmp	_$dll$laz_fpv$LazNewBackground
+	jmp	_$dll$laz_fpv$LazSetBackground
 
 .section .text.n_TVISION$_$TAPPLICATION_$__$$_SETFMENUBAR$TMENUBAR,"x"
 	.balign 16,0x90
 .globl	TVISION$_$TAPPLICATION_$__$$_SETFMENUBAR$TMENUBAR
 TVISION$_$TAPPLICATION_$__$$_SETFMENUBAR$TMENUBAR:
-	jmp	_$dll$laz_fpv$LazNewMenuBar
+	jmp	_$dll$laz_fpv$LazSetMenuBar
 
 .section .text.n_TVISION$_$TAPPLICATION_$__$$_SETFSTATUSBAR$TSTATUSBAR,"x"
 	.balign 16,0x90
 .globl	TVISION$_$TAPPLICATION_$__$$_SETFSTATUSBAR$TSTATUSBAR
 TVISION$_$TAPPLICATION_$__$$_SETFSTATUSBAR$TSTATUSBAR:
-	jmp	_$dll$laz_fpv$LazNewStatusBar
+	jmp	_$dll$laz_fpv$LazSetStatusBar
 
 .section .text.n_tvision_$$_dummy,"x"
 	.balign 16,0x90

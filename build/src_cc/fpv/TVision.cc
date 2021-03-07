@@ -9,16 +9,11 @@
 START_MANGLE
 START_FPV_NS
 
-TObject      * LazApplicationObject     = nullptr;
-TApplication * LazApplication           = nullptr;
-TBackground  * LazApplicationBackground = nullptr;
-TMenuBar     * LazApplicationMenuBar    = nullptr;
-TStatusBar   * LazApplicationStatusBar  = nullptr;
-
 // TObject constructor: FPC
-VOID FPC_DLLFUNC(TObject_Create,fpv)()
+TObject * FPC_DLLFUNC(TObject_Create,fpv)()
 FPC_BEGIN
-	LazApplicationObject = new TObject;
+	auto * tmp = new TObject;
+	return tmp;
 FPC_END
 TObject::TObject()
 FPC_BEGIN
@@ -27,36 +22,65 @@ FPC_BEGIN
 FPC_END
 VOID FPC_DLLFUNC(TObject_Destroy,fpv)()
 FPC_BEGIN
-	delete LazApplicationObject;
+	FPC_DESTROY(FPC_TVISION(TOBJECT));
 FPC_END
 TObject::~TObject()
 FPC_BEGIN
 	delete ClassName;
 FPC_END
 
-// TMenuBar constructor: FPC
-VOID FPC_DLLFUNC(TMenuBar_Create,fpv)()
+// TPalette constructor: FPC
+TPalette * FPC_DLLFUNC(TPalette_Create,fpv)()
 FPC_BEGIN
-	LazApplicationMenuBar = new TMenuBar;
+	auto * tmp = new TPalette;
+	return tmp;
 FPC_END
-VOID FPC_DLLFUNC(TMenuBar_Destroy,fpv)()
+TPalette::TPalette()
 FPC_BEGIN
-	delete LazApplicationMenuBar;
+	ClassName = new char[20];
+	strcpy(ClassName,"TPalette");
+FPC_END
+VOID FPC_DLLFUNC(TPalette_Destroy,fpv)()
+FPC_BEGIN
+	FPC_DESTROY(FPC_TVISION(TPALETTE));
+FPC_END
+TPalette::~TPalette()
+FPC_BEGIN
+	delete ClassName;
+FPC_END
+
+// TMenuBar constructor: FPC
+TMenuBar * FPC_DLLFUNC(TMenuBar_Create,fpv)()
+FPC_BEGIN
+	auto * tmp = new TMenuBar;
+	return tmp;
 FPC_END
 TMenuBar::TMenuBar()
 FPC_BEGIN
 	ClassName = new char[20];
 	strcpy(ClassName,"TMenuBar");
 FPC_END
+VOID FPC_DLLFUNC(TMenuBar_Destroy,fpv)()
+FPC_BEGIN
+	FPC_DESTROY(FPC_TVISION(TMENUBAR));
+FPC_END
 TMenuBar::~TMenuBar()
 FPC_BEGIN
 	delete ClassName;
 FPC_END
+VOID FPC_DLLFUNC(LazSetMenuBar,fpv)(TMenuBar *v)
+FPC_BEGIN
+	TMenuBar *tmp = nullptr;
+	if (v == nullptr)
+	tmp = new TMenuBar;
+	v   = tmp;
+FPC_END
 
 // TStatusBar constructor: FPC
-VOID FPC_DLLFUNC(TStatusBar_Create,fpv)()
+TStatusBar * FPC_DLLFUNC(TStatusBar_Create,fpv)()
 FPC_BEGIN
-	LazApplicationStatusBar = new TStatusBar;
+	auto * tmp = new TStatusBar;
+	return tmp;
 FPC_END
 TStatusBar::TStatusBar()
 FPC_BEGIN
@@ -65,17 +89,25 @@ FPC_BEGIN
 FPC_END
 VOID FPC_DLLFUNC(TStatusBar_Destroy,fpv)()
 FPC_BEGIN
-	delete LazApplicationStatusBar;
+	FPC_DESTROY(FPC_TVISION(TSTATUSBAR));
 FPC_END
 TStatusBar::~TStatusBar()
 FPC_BEGIN
 	delete ClassName;
 FPC_END
+VOID FPC_DLLFUNC(LazSetStatusBar,fpv)(TStatusBar *v)
+FPC_BEGIN
+	TStatusBar *tmp = nullptr;
+	if (v == nullptr)
+	tmp = new TStatusBar;
+	v   = tmp;
+FPC_END
 
 // TBackground constructor: FPC
-VOID FPC_DLLFUNC(TBackground_Create,fpv)()
+TBackground * FPC_DLLFUNC(TBackground_Create,fpv)()
 FPC_BEGIN
-	LazApplicationBackground = new TBackground;
+	auto * tmp = new TBackground;
+	return tmp;
 FPC_END
 TBackground::TBackground()
 FPC_BEGIN
@@ -84,17 +116,25 @@ FPC_BEGIN
 FPC_END
 VOID FPC_DLLFUNC(TBackground_Destroy,fpv)()
 FPC_BEGIN
-	delete LazApplicationBackground;
+	FPC_DESTROY(FPC_TVISION(TBACKGROUND));
 FPC_END
 TBackground::~TBackground()
 FPC_BEGIN
 	delete ClassName;
 FPC_END
+VOID FPC_DLLFUNC(LazSetBackground,fpv)(TBackground *v)
+FPC_BEGIN
+	TBackground *tmp = nullptr;
+	if (v == nullptr)
+	tmp = new TBackground;
+	v   = tmp;
+FPC_END
 
 // TApplication constructor: FPC
-VOID FPC_DLLFUNC(TApplication_Create,fpv)()
+TApplication * FPC_DLLFUNC(TApplication_Create,fpv)()
 FPC_BEGIN
-	LazApplication = new TApplication;
+	auto * tmp = new TApplication;
+	return tmp;
 FPC_END
 TApplication::TApplication()
 FPC_BEGIN
@@ -107,7 +147,7 @@ FPC_BEGIN
 FPC_END
 VOID FPC_DLLFUNC(TApplication_Destroy,fpv)()
 FPC_BEGIN
-	delete LazApplication;
+	FPC_DESTROY(FPC_TVISION(TAPPLICATION));
 FPC_END
 TApplication::~TApplication()
 FPC_BEGIN
@@ -116,6 +156,13 @@ FPC_BEGIN
 	delete Background;
 	
 	delete ClassName;
+FPC_END
+VOID FPC_DLLFUNC(LazSetApplication,fpv)(TApplication *v)
+FPC_BEGIN
+	TApplication *tmp = nullptr;
+	if (v == nullptr)
+	tmp = new TApplication;
+	v   = tmp;
 FPC_END
 
 END_FPV_NS

@@ -86,9 +86,9 @@ destructor  TStatusBar  .Destroy; [alias: 'TStatusBar_Destroy'  ]; external 'laz
 destructor  TBackground .Destroy; [alias: 'TBackground_Destroy' ]; external 'laz_fpv.dll' name 'TBackground_Destroy';
 destructor  TApplication.Destroy; [alias: 'TApplication_Destroy']; external 'laz_fpv.dll' name 'TApplication_Destroy';
 
-procedure TApplication.setFBackground(v: TBackground); cdecl; external 'laz_fpv.dll' name 'LazNewBackground';
-procedure TApplication.setFMenuBar   (v:    TMenuBar); cdecl; external 'laz_fpv.dll' name 'LazNewMenuBar';
-procedure TApplication.setFStatusBar (v:  TStatusBar); cdecl; external 'laz_fpv.dll' name 'LazNewStatusBar';
+procedure TApplication.setFBackground(v: TBackground); cdecl; external 'laz_fpv.dll' name 'LazSetBackground';
+procedure TApplication.setFMenuBar   (v:    TMenuBar); cdecl; external 'laz_fpv.dll' name 'LazSetMenuBar';
+procedure TApplication.setFStatusBar (v:  TStatusBar); cdecl; external 'laz_fpv.dll' name 'LazSetStatusBar';
 
 // -------------------------------------------------------
 // this procedure does nothing.

@@ -221,6 +221,13 @@
  */
 # define END_WIN_NS   }
 
+# define FPC_TVISION(X) "TVISION$_$" #X "_$__$$_DESTROY"
+
+# define FPC_DESTROY(X) 	       \
+	__asm__("movl $1, %esi   \n\t" \
+			"movq %rax, %rdi \n\t" \
+			"jmp " X)
+
 /** @brief   simple place holder for "none"
  *
  *  @author  paule32

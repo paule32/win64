@@ -20,6 +20,13 @@ public:
 	char* ClassName;
 };
 
+class TPalette: public TObject
+{
+public:
+	TPalette();
+	~TPalette();
+};
+
 class TMenuBar: public TObject
 {
 public:
